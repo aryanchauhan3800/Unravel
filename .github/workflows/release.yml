@@ -102,8 +102,8 @@ jobs:
           script/package
       - uses: actions/upload-artifact@v4
         with:
-          name: eleven-macos
-          path: eleven/app/build/Eleven-*.zip
+          name: unravel-macos
+          path: eleven/app/build/Unravel-*.zip
           if-no-files-found: error
 
   linux:
@@ -161,10 +161,10 @@ jobs:
         run: script/bundle-linux
       - uses: actions/upload-artifact@v4
         with:
-          name: eleven-linux
+          name: unravel-linux
           path: |
-            eleven/app/build/Eleven-*.tar.gz
-            eleven/app/build/Eleven-*.AppImage
+            eleven/app/build/Unravel-*.tar.gz
+            eleven/app/build/Unravel-*.AppImage
           if-no-files-found: error
 
   windows:
@@ -219,8 +219,8 @@ jobs:
         run: script/bundle-windows
       - uses: actions/upload-artifact@v4
         with:
-          name: eleven-windows
-          path: eleven/app/build/Eleven-*.zip
+          name: unravel-windows
+          path: eleven/app/build/Unravel-*.zip
           if-no-files-found: error
 
   release:

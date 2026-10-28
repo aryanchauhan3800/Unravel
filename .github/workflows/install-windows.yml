@@ -20,8 +20,8 @@ jobs:
       matrix:
         shell: [powershell, pwsh]
     env:
-      ELEVEN_NO_LAUNCH: "1"
-      ELEVEN_DEST: ${{ github.workspace }}\eleven-install
+      UNRAVEL_NO_LAUNCH: "1"
+      UNRAVEL_DEST: ${{ github.workspace }}\unravel-install
     steps:
       - uses: actions/checkout@v4
       - name: Run the installer
@@ -29,5 +29,5 @@ jobs:
       - name: Check what it installed
         shell: pwsh
         run: |
-          if (-not (Test-Path "$env:ELEVEN_DEST\bin\Eleven.exe")) { throw "Eleven.exe is missing" }
-          if (-not (Test-Path ([IO.Path]::Combine([Environment]::GetFolderPath("Programs"), "Eleven.lnk")))) { throw "Start menu shortcut is missing" }
+          if (-not (Test-Path "$env:UNRAVEL_DEST\bin\Unravel.exe")) { throw "Unravel.exe is missing" }
+          if (-not (Test-Path ([IO.Path]::Combine([Environment]::GetFolderPath("Programs"), "Unravel.lnk")))) { throw "Start menu shortcut is missing" }

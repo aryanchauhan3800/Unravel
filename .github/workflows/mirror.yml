@@ -44,7 +44,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
     steps:
       - name: Download the release
-        run: gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern 'Eleven-*' --dir dist
+        run: gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern 'Unravel-*' --dir dist
       - name: Upload the release to R2
         run: |
           for file in dist/*; do
