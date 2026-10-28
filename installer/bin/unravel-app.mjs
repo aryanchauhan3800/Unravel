@@ -5,7 +5,7 @@ import { accessSync, constants, mkdtempSync, rmSync, writeFileSync } from "node:
 import { homedir, tmpdir } from "node:os";
 import { join } from "node:path";
 
-const REPO = process.env.UNRAVEL_REPO ?? process.env.ELEVEN_REPO ?? "Zfinix/unravel";
+const REPO = process.env.UNRAVEL_REPO ?? process.env.ELEVEN_REPO ?? "aryanchauhan3800/Unravel";
 const arch = process.arch === "arm64" ? "arm64" : "x86_64";
 
 function fail(message) {
