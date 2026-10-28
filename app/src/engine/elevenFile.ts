@@ -126,7 +126,7 @@ function parseManifest(text: string): Manifest {
   const parsed: unknown = JSON.parse(text);
   if (!isRecord(parsed) || !Array.isArray(parsed.entries)) throw new Error("This project file has no table of contents.");
   const { format, name, kind, arch, meta, binary, savedAt, app } = parsed;
-  if (typeof format !== "number" || format > FORMAT) throw new Error("This project was saved by a newer Eleven. Update Eleven to open it.");
+  if (typeof format !== "number" || format > FORMAT) throw new Error("This project was saved by a newer Unravel. Update Unravel to open it.");
   if (typeof name !== "string" || typeof kind !== "string" || typeof arch !== "string" || typeof meta !== "string" || typeof binary !== "string" || typeof savedAt !== "number" || typeof app !== "string") {
     throw new Error("This project file's details are damaged.");
   }
@@ -140,7 +140,7 @@ export function openElevenFile(path: string): ElevenFile {
   const fd = openSync(path, "r");
   try {
     const head = readAt(fd, 0, HEADER);
-    if (!MAGIC.every((byte, ix) => head[ix] === byte)) throw new Error("This isn't an Eleven project file.");
+    if (!MAGIC.every((byte, ix) => head[ix] === byte)) throw new Error("This isn't an Unravel project file.");
     const length = new DataView(head.buffer).getUint32(MAGIC.length, true);
     const manifest = parseManifest(new TextDecoder().decode(readAt(fd, HEADER, length)));
     const base = HEADER + length;

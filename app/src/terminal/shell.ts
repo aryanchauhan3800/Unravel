@@ -110,7 +110,7 @@ export class Shell {
     this.proc = Bun.spawn([shell, "-l"], {
       windowsHide: true,
       cwd: this.cwd,
-      env: { ...process.env, TERM: "xterm-256color", COLORTERM: "truecolor", TERM_PROGRAM: "Eleven" },
+      env: { ...process.env, TERM: "xterm-256color", COLORTERM: "truecolor", TERM_PROGRAM: "Unravel" },
       terminal: {
         cols: this.cols,
         rows: this.rows,

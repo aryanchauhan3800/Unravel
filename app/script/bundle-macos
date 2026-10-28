@@ -3,12 +3,12 @@ set -euo pipefail
 
 app_dir="$(cd "$(dirname "$0")/.." && pwd)"
 repo="$(cd "$app_dir/.." && pwd)"
-out="$app_dir/build/Eleven.app"
+out="$app_dir/build/Unravel.app"
 version="$(cd "$app_dir" && bun -e 'console.log(require("./package.json").version ?? "0.1.0")')"
 
 rm -rf "$out"
 mkdir -p "$out/Contents/MacOS" "$out/Contents/Resources"
-(cd "$app_dir" && bun build --compile --define process.env.NODE_ENV='"production"' src/bundled.ts --outfile "$out/Contents/MacOS/Eleven" > /dev/null)
+(cd "$app_dir" && bun build --compile --define process.env.NODE_ENV='"production"' src/bundled.ts --outfile "$out/Contents/MacOS/Unravel" > /dev/null)
 cp -R "$app_dir/assets" "$out/Contents/Resources/assets"
 cp -R "$app_dir/skills" "$out/Contents/Resources/skills"
 cp -R "$app_dir/locales" "$out/Contents/Resources/locales"
@@ -41,41 +41,44 @@ if xcrun actool "$repo/assets/Eleven.icon" \
   --output-partial-info-plist "$out/Contents/Resources/.icon.plist" > /dev/null 2>&1; then
   rm -f "$out/Contents/Resources/.icon.plist"
 else
-  cp "$app_dir/script/macos-icon/Assets.car" "$app_dir/script/macos-icon/Eleven.icns" "$out/Contents/Resources/"
+  cp "$app_dir/script/macos-icon/Assets.car" "$app_dir/script/macos-icon/Unravel.icns" "$out/Contents/Resources/Unravel.icns"
+  cp "$app_dir/script/macos-icon/Unravel.icns" "$out/Contents/Resources/Eleven.icns"
 fi
-cp "$repo/assets/ElevenDocument.icns" "$out/Contents/Resources/ElevenDocument.icns"
+cp "$repo/assets/UnravelDocument.icns" "$out/Contents/Resources/UnravelDocument.icns"
+cp "$repo/assets/UnravelDocument.icns" "$out/Contents/Resources/ElevenDocument.icns"
 
 cat > "$out/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <key>CFBundleName</key><string>Eleven</string>
-  <key>CFBundleDisplayName</key><string>Eleven</string>
-  <key>CFBundleIdentifier</key><string>app.chizi.eleven</string>
-  <key>CFBundleExecutable</key><string>Eleven</string>
+  <key>CFBundleName</key><string>Unravel</string>
+  <key>CFBundleDisplayName</key><string>Unravel</string>
+  <key>CFBundleIdentifier</key><string>app.chizi.unravel</string>
+  <key>CFBundleExecutable</key><string>Unravel</string>
   <key>CFBundlePackageType</key><string>APPL</string>
+  <key>CFBundleIconFile</key><string>Unravel.icns</string>
   <key>CFBundleShortVersionString</key><string>$version</string>
   <key>CFBundleVersion</key><string>$version</string>
   <key>UTExportedTypeDeclarations</key>
   <array>
     <dict>
-      <key>UTTypeIdentifier</key><string>app.chizi.eleven.project</string>
-      <key>UTTypeDescription</key><string>Eleven Project</string>
+      <key>UTTypeIdentifier</key><string>app.chizi.unravel.project</string>
+      <key>UTTypeDescription</key><string>Unravel Project</string>
       <key>UTTypeConformsTo</key><array><string>public.data</string></array>
-      <key>UTTypeIconFile</key><string>ElevenDocument</string>
+      <key>UTTypeIconFile</key><string>UnravelDocument</string>
       <key>UTTypeTagSpecification</key>
-      <dict><key>public.filename-extension</key><array><string>eleven</string></array></dict>
+      <dict><key>public.filename-extension</key><array><string>unravel</string><string>eleven</string></array></dict>
     </dict>
   </array>
   <key>CFBundleDocumentTypes</key>
   <array>
     <dict>
-      <key>CFBundleTypeName</key><string>Eleven Project</string>
+      <key>CFBundleTypeName</key><string>Unravel Project</string>
       <key>CFBundleTypeRole</key><string>Editor</string>
       <key>LSHandlerRank</key><string>Owner</string>
-      <key>CFBundleTypeIconFile</key><string>ElevenDocument</string>
-      <key>LSItemContentTypes</key><array><string>app.chizi.eleven.project</string></array>
+      <key>CFBundleTypeIconFile</key><string>UnravelDocument</string>
+      <key>LSItemContentTypes</key><array><string>app.chizi.unravel.project</string><string>app.chizi.eleven.project</string></array>
     </dict>
     <dict>
       <key>CFBundleTypeName</key><string>App or binary</string>

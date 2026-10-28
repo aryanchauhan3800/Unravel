@@ -1,19 +1,19 @@
 # MCP tools
 
-Every agent you run in Eleven gets its tools over the [Model Context Protocol](https://modelcontextprotocol.io). Eleven hands each agent session up to four tool servers, chosen under **Settings > Agents > Tools agents get**:
+Every agent you run in Unravel gets its tools over the [Model Context Protocol](https://modelcontextprotocol.io). Unravel hands each agent session up to four tool servers, chosen under **Settings > Agents > Tools agents get**:
 
 | Server | Setting | What it gives the agent |
 | --- | --- | --- |
-| `eleven` | Eleven | Drive the window and annotate the project: open functions, switch views, rename, notes, comments, bookmarks, patches, GPU profiles. |
-| `eleven-rea` | Analysis tools (REA) | REA's analysis tools on the open file, minus the ones that would write names, comments or bookmarks around Eleven's project. |
+| `eleven` | Unravel | Drive the window and annotate the project: open functions, switch views, rename, notes, comments, bookmarks, patches, GPU profiles. |
+| `eleven-rea` | Analysis tools (REA) | REA's analysis tools on the open file, minus the ones that would write names, comments or bookmarks around Unravel's project. |
 | `ida` | IDA Pro | Your IDA MCP plugin, if `REA_IDA_MCP_CONFIG` (or the IDA path in Settings) points at its JSON config. |
 | `custom` | Add a tool server | Any MCP server command you type, such as `npx my-mcp-server`. |
 
-The `eleven` and `eleven-rea` servers are Eleven itself, started with `--eleven-mcp` or `--rea-mcp`. Agents never need to install anything for them.
+The `eleven` and `eleven-rea` servers are Unravel itself, started with `--eleven-mcp` or `--rea-mcp`. Agents never need to install anything for them.
 
 ## The `eleven` server
 
-These tools act on the file open in the window. If no file is open, every tool answers "No file is open in Eleven. Ask the user to open one."
+These tools act on the file open in the window. If no file is open, every tool answers "No file is open in Unravel. Ask the user to open one."
 
 Functions can be named by their Ghidra name (`FUN_100001234`), by a name the user or an agent gave them, or by address (`0x100001234`). Addresses are always hexadecimal with a `0x` prefix.
 
@@ -65,9 +65,9 @@ waiting for the user's review: Patch 0x100003f40 to 1f 20 03 d5
 
 ### Changing the project
 
-These tools write to the user's Eleven project, never to the binary. Every change is logged with the agent's name and chat, and the user can undo it from the History tab or with ⌘Z.
+These tools write to the user's Unravel project, never to the binary. Every change is logged with the agent's name and chat, and the user can undo it from the History tab or with ⌘Z.
 
-When the user turns on the review setting (`reviewAgentEdits` in `~/Library/Application Support/Eleven/settings.json`), these edits are filed as suggestions in the Changes tab instead of being saved, and the tool answer starts with "Suggested to the user".
+When the user turns on the review setting (`reviewAgentEdits` in `~/Library/Application Support/Unravel/settings.json`), these edits are filed as suggestions in the Changes tab instead of being saved, and the tool answer starts with "Suggested to the user".
 
 #### `rename_function`
 
@@ -118,7 +118,7 @@ Marks what the bytes at an address are, like Hopper's Modify menu. Ghidra re-rea
 
 #### `set_number_format`
 
-Chooses how the number in an instruction reads in assembly. Eleven draws the format; the binary and Ghidra's database are unchanged.
+Chooses how the number in an instruction reads in assembly. Unravel draws the format; the binary and Ghidra's database are unchanged.
 
 | Argument | Type | Description |
 | --- | --- | --- |
@@ -127,7 +127,7 @@ Chooses how the number in an instruction reads in assembly. Eleven draws the for
 
 #### `propose_patch`
 
-Suggests new bytes at an address. Patches are always suggestions: nothing is saved until the user accepts it in the Changes tab, and even then Eleven writes a patched copy, never the original file.
+Suggests new bytes at an address. Patches are always suggestions: nothing is saved until the user accepts it in the Changes tab, and even then Unravel writes a patched copy, never the original file.
 
 | Argument | Type | Description |
 | --- | --- | --- |
@@ -176,8 +176,8 @@ Tools that only file a suggestion (`propose_patch`, and the project edits when r
 
 ## Privacy
 
-- With **Settings > Privacy > Hide your name in paths** on, Eleven replaces the home folder with `~` in every answer from `eleven` and `eleven-rea`.
-- With **Ask before sending a whole file** on, Eleven asks before a tool reads the entire open file, such as `read_bytes` over its full length or a non-REA tool given its path.
+- With **Settings > Privacy > Hide your name in paths** on, Unravel replaces the home folder with `~` in every answer from `eleven` and `eleven-rea`.
+- With **Ask before sending a whole file** on, Unravel asks before a tool reads the entire open file, such as `read_bytes` over its full length or a non-REA tool given its path.
 
 ## How the `eleven` server reaches the window
 

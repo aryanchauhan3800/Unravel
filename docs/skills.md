@@ -1,6 +1,6 @@
 # Skills
 
-Skills are reverse-engineering playbooks. Type `/` in the composer or open the ⌘K palette to pick one and Eleven sends its instructions to whichever agent the chat uses, followed by anything you typed after it. They work with every agent, because they only rely on the [MCP tools](mcp-tools.md) Eleven gives each one.
+Skills are reverse-engineering playbooks. Type `/` in the composer or open the ⌘K palette to pick one and Unravel sends its instructions to whichever agent the chat uses, followed by anything you typed after it. They work with every agent, because they only rely on the [MCP tools](mcp-tools.md) Unravel gives each one.
 
 ## Built in
 
@@ -35,7 +35,7 @@ description: Find the crypto a program uses and check the keys and modes.
 4. Leave a note on every function that handles a key with `add_note` (eleven).
 ```
 
-Put the folder in `~/Library/Application Support/Eleven/skills/`, or choose another folder under **Settings > Skills > Skills folder**. **New skill…** on the same page starts one for you. Eleven reads the folder the next time it lists skills.
+Put the folder in `~/Library/Application Support/Unravel/skills/`, or choose another folder under **Settings > Skills > Skills folder**. **New skill…** on the same page starts one for you. Unravel reads the folder the next time it lists skills.
 
 - `name` is how the skill is listed. A skill of yours with the same name as a built-in one replaces it.
 - `description` is the one line shown under it.

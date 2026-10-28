@@ -32,7 +32,7 @@ test("rizin alone, or ghidra with java, is enough to start", () => {
 
 test("the composer strip says what is missing and clears when ready", () => {
   const base = { found: { rizin: GONE, ghidra: GONE, java: GONE }, installs: { rizin: IDLE, ghidra: IDLE, java: IDLE }, agentName: "Claude", agent: "ready" as const, waiting: false };
-  expect(stripFor(base)?.text).toBe("To read Calculator, Eleven needs Rizin (38 MB).");
+  expect(stripFor(base)?.text).toBe("To read Calculator, Unravel needs Rizin (38 MB).");
   expect(stripFor(base)?.engines).toEqual(["rizin"]);
   const busy: Install = { phase: "running", progress: 0.5, note: "x" };
   const running = { ...base, installs: { ...base.installs, rizin: busy }, waiting: true };

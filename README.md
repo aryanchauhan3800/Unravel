@@ -35,7 +35,7 @@ Native code is read by [Ghidra](https://ghidra-sre.org) through [REA](https://gi
 - **Rewrite in any language.** Show a function's pseudocode rewritten by your agent in C, C++, Rust, Go, Swift, Python, TypeScript, Java, C# or Zig.
 - **GPU kernels.** CUDA and HIP fat binaries open as highlighted PTX, with notes beside each block and rewrites in CUDA C++, HIP C++ or Metal.
 - **Shaders, models and GPU profiles.** Metal shaders and ML model files (GGUF, safetensors, PyTorch, ONNX) open in the workbench, linked to the code that loads them. Profile with Instruments.
-- **Projects.** A project is one app or binary and holds its chats, agents, renames, bookmarks, notes and patches. Press ⌘S to save it as a single `.eleven` file you can share. Nothing is written there until you do.
+- **Projects.** A project is one app or binary and holds its chats, agents, renames, bookmarks, notes and patches. Press ⌘S to save it as a single `.unravel` file you can share. Nothing is written there until you do.
 - **Patching.** Edit bytes at an address and write a patched copy. The original is never touched.
 - **Diffing.** Compare two builds by function and read the changes like a code review.
 - **Debugging.** Run a program under LLDB, break on the function you are looking at, step and read locals.
@@ -44,14 +44,14 @@ Native code is read by [Ghidra](https://ghidra-sre.org) through [REA](https://gi
 
 ## Support Unravel
 
-Unravel is free and built by one person. If it saves you time, [sponsoring on GitHub](https://github.com/sponsors/Zfinix) keeps it going. It pays for signed releases and the debugger, and you can see what's coming next.
+Unravel is free and open source. If it saves you time, starring the repository on GitHub or [sponsoring on GitHub](https://github.com/sponsors/aryanchauhan3800) helps support ongoing development.
 
 ## Install
 
 **macOS** 14 or later on Apple Silicon:
 
 ```sh
-curl -fsSL https://unravel.chizi.app/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/aryanchauhan3800/Unravel/main/install.sh | bash
 ```
 
 This installs `Unravel.app` into `/Applications`. The app is signed and notarized by Apple.
@@ -59,10 +59,10 @@ This installs `Unravel.app` into `/Applications`. The app is signed and notarize
 **Windows** x64, in PowerShell:
 
 ```powershell
-irm https://unravel.chizi.app/install.ps1 | iex
+irm https://raw.githubusercontent.com/aryanchauhan3800/Unravel/main/install.ps1 | iex
 ```
 
-**Linux** x64: download the AppImage or the `.tar.gz` from the [latest release](https://github.com/Zfinix/unravel/releases/latest).
+**Linux** x64: download the AppImage or the `.tar.gz` from the [latest release](https://github.com/aryanchauhan3800/Unravel/releases/latest).
 
 On first run Unravel walks you through picking an engine and an agent, and installs what's missing for you:
 
@@ -74,12 +74,12 @@ Android apps also need [jadx](https://github.com/skylot/jadx). [apktool](https:/
 
 ## Build from source
 
-You need [Bun](https://bun.sh), Node 20 or newer, Ghidra and a JDK as above, and a checkout of REA 6.x next to this repo (`../rea`), or `ELEVEN_REA` pointing at one.
+You need [Bun](https://bun.sh), Node 20 or newer, Ghidra and a JDK as above, and a checkout of REA 6.x next to this repo (`../rea`), or `UNRAVEL_REA` / `ELEVEN_REA` pointing at one.
 
 ```sh
-git clone https://github.com/Zfinix/unravel
-git clone https://github.com/Zfinix/rea
-cd eleven/app
+git clone https://github.com/aryanchauhan3800/Unravel.git
+git clone https://github.com/Zfinix/rea.git
+cd Unravel/app
 bun install
 bun run dev
 ```
@@ -101,16 +101,16 @@ All of these are optional. Unravel finds the usual install spots on its own.
 | --- | --- |
 | `GHIDRA_INSTALL_DIR` | Ghidra install to use |
 | `JAVA_HOME` | JDK to run Ghidra with |
-| `ELEVEN_REA` | REA to use instead of the bundled one |
-| `ELEVEN_RIZIN` | Rizin to use |
-| `ELEVEN_JADX` | jadx to use for Android apps |
-| `ELEVEN_APKTOOL` | apktool to use for smali |
-| `ELEVEN_LLDB_DAP` | `lldb-dap` for the debugger |
-| `ELEVEN_SUPPORT` | Where Unravel keeps projects and settings |
-| `ELEVEN_CACHE` | Where Unravel caches decompiled code |
-| `ELEVEN_PROJECTS_DIR` | Where the save dialog starts (default `~/Documents/Unravel`) |
-| `ELEVEN_EXPORT_DIR` | Where exports and patched copies go (default `~/Downloads/Unravel`) |
-| `ELEVEN_SIGN_IDENTITY` | Code-signing identity for `./script/package` |
+| `UNRAVEL_REA` / `ELEVEN_REA` | REA to use instead of the bundled one |
+| `UNRAVEL_RIZIN` / `ELEVEN_RIZIN` | Rizin to use |
+| `UNRAVEL_JADX` / `ELEVEN_JADX` | jadx to use for Android apps |
+| `UNRAVEL_APKTOOL` / `ELEVEN_APKTOOL` | apktool to use for smali |
+| `UNRAVEL_LLDB_DAP` / `ELEVEN_LLDB_DAP` | `lldb-dap` for the debugger |
+| `UNRAVEL_SUPPORT` / `ELEVEN_SUPPORT` | Where Unravel keeps projects and settings |
+| `UNRAVEL_CACHE` / `ELEVEN_CACHE` | Where Unravel caches decompiled code |
+| `UNRAVEL_PROJECTS_DIR` / `ELEVEN_PROJECTS_DIR` | Where the save dialog starts (default `~/Documents/Unravel`) |
+| `UNRAVEL_EXPORT_DIR` / `ELEVEN_EXPORT_DIR` | Where exports and patched copies go (default `~/Downloads/Unravel`) |
+| `UNRAVEL_SIGN_IDENTITY` / `ELEVEN_SIGN_IDENTITY` | Code-signing identity for `./script/package` |
 
 ## Documentation
 
@@ -128,5 +128,3 @@ See [AGENTS.md](AGENTS.md) for how the code is laid out and the rules it follows
 ## License
 
 Unravel is released under the [Apache License 2.0](LICENSE). Bundled third-party code is listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Agent logos belong to their owners and appear only to identify those agents.
-# Unravel
-# Unravel

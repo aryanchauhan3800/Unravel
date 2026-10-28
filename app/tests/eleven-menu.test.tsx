@@ -33,14 +33,14 @@ afterAll(() => screen.unmount());
 
 async function openSub(label: string, row: string): Promise<void> {
   if (screen.labelled(row) !== null) return;
-  if (screen.labelled("Settings") === null || screen.labelled("Appearance") === null) screen.clickLabel("Eleven menu");
+  if (screen.labelled("Settings") === null || screen.labelled("Appearance") === null) screen.clickLabel("Unravel menu");
   await screen.until(() => screen.labelled(label) !== null, 5_000);
   screen.clickLabel(label);
   await screen.until(() => screen.labelled(row) !== null, 5_000);
 }
 
 test("eleven menu: a submenu row runs instead of closing the menu", async () => {
-  await screen.until(() => screen.labelled("Eleven menu") !== null, 20_000);
+  await screen.until(() => screen.labelled("Unravel menu") !== null, 20_000);
   await openSub("Appearance", "Light");
   screen.clickLabel("Light");
   await screen.until(() => appearance === "Light", 5_000);
@@ -55,7 +55,7 @@ test("eleven menu: a submenu row still runs when the release comes a moment afte
 }, 60_000);
 
 test("eleven menu: a top-level row runs its command", async () => {
-  if (screen.labelled("Appearance") === null) screen.clickLabel("Eleven menu");
+  if (screen.labelled("Appearance") === null) screen.clickLabel("Unravel menu");
   await screen.until(() => screen.labelled("Appearance") !== null, 5_000);
   screen.click("Settings");
   await screen.until(() => ran.includes("settings"), 5_000);
@@ -63,7 +63,7 @@ test("eleven menu: a top-level row runs its command", async () => {
 }, 60_000);
 
 test("eleven menu: a click outside closes it", async () => {
-  screen.clickLabel("Eleven menu");
+  screen.clickLabel("Unravel menu");
   await screen.until(() => screen.labelled("Appearance") !== null, 5_000);
   screen.clickLabel("entry");
   await screen.until(() => screen.labelled("Appearance") === null, 5_000);

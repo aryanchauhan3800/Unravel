@@ -14,10 +14,10 @@ import type { Target } from "./target";
 import { cacheRoot as platformCache, chooseSavePath } from "../lib/platform";
 
 function cacheRoot(): string {
-  return pathSetting("cacheDir", "ELEVEN_CACHE") ?? platformCache();
+  return pathSetting("cacheDir", "UNRAVEL_CACHE") ?? pathSetting("cacheDir", "ELEVEN_CACHE") ?? platformCache();
 }
 const DOCUMENTS = supportPath("documents.json");
-const EXTENSION = ".eleven";
+const EXTENSION = ".unravel";
 
 /** Level 19 took tens of seconds and GiBs on large binaries; 3 is fast and streams in little memory. */
 const LEVEL = 3;
@@ -28,7 +28,8 @@ let packedBinary: { readonly id: string; readonly part: Packed } | null = null;
 const saves = new SerialQueue();
 
 export function isElevenFile(path: string): boolean {
-  return path.toLowerCase().endsWith(EXTENSION);
+  const lower = path.toLowerCase();
+  return lower.endsWith(EXTENSION) || lower.endsWith(".eleven");
 }
 
 function documents(): Record<string, string> {
@@ -82,9 +83,9 @@ async function binaryPart(path: string, id: string): Promise<Packed> {
   return part;
 }
 
-/** Where the save dialog starts: Documents/Eleven. */
+/** Where the save dialog starts: Documents/Unravel. */
 export function projectsFolder(): string {
-  return process.env.ELEVEN_PROJECTS_DIR ?? join(homedir(), "Documents", "Eleven");
+  return process.env.UNRAVEL_PROJECTS_DIR ?? process.env.ELEVEN_PROJECTS_DIR ?? join(homedir(), "Documents", "Unravel");
 }
 
 const text = (value: string): Uint8Array => new TextEncoder().encode(value);

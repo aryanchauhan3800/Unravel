@@ -16,19 +16,19 @@ app_dir="$(cd "$(dirname "$0")/.." && pwd)"
 repo="$(cd "$app_dir/.." && pwd)"
 version="$(cd "$app_dir" && bun -e 'console.log(require("./package.json").version ?? "0.1.0")')"
 root="$app_dir/build/windows"
-out="$root/Eleven"
+out="$root/Unravel"
 res="$out/Resources"
 cache="$app_dir/build/cache"
-zip="$app_dir/build/Eleven-$version-windows-x64.zip"
+zip="$app_dir/build/Unravel-$version-windows-x64.zip"
 node_version="${ELEVEN_NODE_VERSION:-$(node -v 2>/dev/null || echo v24.18.0)}"
 rizin_version="${RIZIN_VERSION:-v0.9.1}"
 
 rm -rf "$out"
 mkdir -p "$out/bin" "$res" "$cache"
 (cd "$app_dir" && bun build --compile --target=bun-windows-x64 --define process.env.NODE_ENV='"production"' \
-  --windows-icon=script/Eleven.ico --windows-hide-console \
-  --windows-title=Eleven --windows-version="$version.0" \
-  src/bundled.ts --outfile "$out/bin/Eleven.exe" > /dev/null)
+  --windows-icon=script/Unravel.ico --windows-hide-console \
+  --windows-title=Unravel --windows-version="$version.0" \
+  src/bundled.ts --outfile "$out/bin/Unravel.exe" > /dev/null)
 cp -R "$app_dir/assets" "$res/assets"
 cp -R "$app_dir/skills" "$res/skills"
 cp -R "$app_dir/locales" "$res/locales"
@@ -94,7 +94,7 @@ fi
 
 rm -f "$zip"
 if command -v 7z > /dev/null; then
-  (cd "$root" && 7z a -tzip -mx=7 "$(cygpath -w "$zip")" Eleven > /dev/null)
+  (cd "$root" && 7z a -tzip -mx=7 "$(cygpath -w "$zip")" Unravel > /dev/null)
 else
   powershell.exe -NoProfile -Command "Compress-Archive -Path '$(cygpath -w "$out")' -DestinationPath '$(cygpath -w "$zip")'"
 fi

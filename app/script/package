@@ -7,13 +7,13 @@
 set -euo pipefail
 
 app_dir="$(cd "$(dirname "$0")/.." && pwd)"
-out="$app_dir/build/Eleven.app"
+out="$app_dir/build/Unravel.app"
 version="$(cd "$app_dir" && bun -e 'console.log(require("./package.json").version ?? "0.1.0")')"
 arch="$(uname -m)"
-identity="${ELEVEN_SIGN_IDENTITY:--}"
-profile="${ELEVEN_NOTARY_PROFILE:-eleven-notary}"
-entitlements="$app_dir/script/Eleven.entitlements"
-zip="$app_dir/build/Eleven-$version-$arch.zip"
+identity="${UNRAVEL_SIGN_IDENTITY:-${ELEVEN_SIGN_IDENTITY:--}}"
+profile="${UNRAVEL_NOTARY_PROFILE:-${ELEVEN_NOTARY_PROFILE:-unravel-notary}}"
+entitlements="$app_dir/script/Unravel.entitlements"
+zip="$app_dir/build/Unravel-$version-$arch.zip"
 
 echo "building $out"
 "$app_dir/script/bundle-macos" > /dev/null
@@ -27,7 +27,7 @@ sign() {
 }
 
 echo "signing with: $identity"
-main="$out/Contents/MacOS/Eleven"
+main="$out/Contents/MacOS/Unravel"
 # Every nested Mach-O first, deepest paths first, then the app itself.
 find "$out/Contents" -type f ! -path "$main" -print0 \
   | xargs -0 file --no-pad | grep -E ': +Mach-O' | cut -d: -f1 \

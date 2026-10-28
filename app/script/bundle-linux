@@ -12,17 +12,17 @@ app_dir="$(cd "$(dirname "$0")/.." && pwd)"
 repo="$(cd "$app_dir/.." && pwd)"
 version="$(cd "$app_dir" && bun -e 'console.log(require("./package.json").version ?? "0.1.0")')"
 root="$app_dir/build/linux"
-out="$root/Eleven"
+out="$root/Unravel"
 res="$out/Resources"
 cache="$app_dir/build/cache"
-tarball="$app_dir/build/Eleven-$version-linux-x64.tar.gz"
-appimage="$app_dir/build/Eleven-$version-x86_64.AppImage"
+tarball="$app_dir/build/Unravel-$version-linux-x64.tar.gz"
+appimage="$app_dir/build/Unravel-$version-x86_64.AppImage"
 node_version="${ELEVEN_NODE_VERSION:-$(node -v 2>/dev/null || echo v24.18.0)}"
 rizin_version="${RIZIN_VERSION:-v0.9.1}"
 
 rm -rf "$out"
 mkdir -p "$out/bin" "$res" "$cache"
-(cd "$app_dir" && bun build --compile --target=bun-linux-x64 --define process.env.NODE_ENV='"production"' src/bundled.ts --outfile "$out/bin/eleven" > /dev/null)
+(cd "$app_dir" && bun build --compile --target=bun-linux-x64 --define process.env.NODE_ENV='"production"' src/bundled.ts --outfile "$out/bin/unravel" > /dev/null)
 cp -R "$app_dir/assets" "$res/assets"
 cp -R "$app_dir/skills" "$res/skills"
 cp -R "$app_dir/locales" "$res/locales"
@@ -102,27 +102,28 @@ rizin_build="${ELEVEN_RIZIN_BUILD:-$app_dir/build/rizin-linux}"
 [ -x "$rizin_build/bin/rizin" ] || build_rizin "$rizin_build" > /dev/null
 cp -R "$rizin_build" "$res/rizin"
 
+cp "$app_dir/assets/icon-light.png" "$out/unravel.png"
 cp "$app_dir/assets/icon-light.png" "$out/eleven.png"
-cat > "$out/eleven.desktop" << DESKTOP
+cat > "$out/unravel.desktop" << DESKTOP
 [Desktop Entry]
 Type=Application
-Name=Eleven
+Name=Unravel
 Comment=Agent-first reverse engineering
-Exec=eleven %F
-Icon=eleven
+Exec=unravel %F
+Icon=unravel
 Terminal=false
 Categories=Development;
-StartupWMClass=eleven
+StartupWMClass=unravel
 DESKTOP
 cat > "$out/AppRun" << 'APPRUN'
 #!/bin/sh
 here="$(dirname "$(readlink -f "$0")")"
-exec "$here/bin/eleven" "$@"
+exec "$here/bin/unravel" "$@"
 APPRUN
-chmod +x "$out/AppRun" "$out/bin/eleven"
+chmod +x "$out/AppRun" "$out/bin/unravel"
 
 rm -f "$tarball"
-tar -C "$root" -czf "$tarball" Eleven
+tar -C "$root" -czf "$tarball" Unravel
 echo "packaged $tarball ($(du -h "$tarball" | cut -f1))"
 
 appimagetool="${APPIMAGETOOL:-$(command -v appimagetool || true)}"

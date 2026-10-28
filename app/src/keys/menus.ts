@@ -63,7 +63,7 @@ function recentMenu(ctx: MenuContext): MenuItemSpec {
 
 export function menuBar(ctx: MenuContext): MenuSpec[] {
   return [
-    { label: "Eleven", items: [
+    { label: "Unravel", items: [
       app("about", "menu.about"),
       app("updates", "menu.checkUpdates"),
       SEPARATOR,

@@ -8,10 +8,10 @@ import { cacheRoot, OS, unzip } from "./platform";
 import { isNewer } from "./version";
 import { run, startWith } from "./process";
 
-const RELEASES = "https://api.github.com/repos/Zfinix/eleven/releases";
+const RELEASES = "https://api.github.com/repos/Zfinix/unravel/releases";
 const MIRROR = "https://dl.chizi.app";
 const STAGE = join(cacheRoot(), "update");
-const STAGED_APP = join(STAGE, "next", "Eleven.app");
+const STAGED_APP = join(STAGE, "next", "Unravel.app");
 const STAGED_VERSION = join(STAGE, "version");
 const ARCH = process.arch === "arm64" ? "arm64" : "x86_64";
 

@@ -75,7 +75,7 @@ function exitCode(body: unknown): number | null {
   return isRecord(body) && typeof body.exitCode === "number" ? body.exitCode : null;
 }
 
-const NO_DEBUGGER = "Eleven needs lldb-dap to debug. Install Xcode's command line tools, or choose lldb-dap in Settings.";
+const NO_DEBUGGER = "Unravel needs lldb-dap to debug. Install Xcode's command line tools, or choose lldb-dap in Settings.";
 
 const PROTECTED = "macOS won't let the debugger run this program. System programs and apps with hardened runtime are protected. Try a copy you built, or one re-signed without hardened runtime.";
 

@@ -7,7 +7,7 @@ import { CallToolRequestSchema, type CallToolResult, CallToolResultSchema, ListT
 import { reaCallOptions, reaEnv, reaLaunch } from "../engine/rea";
 import { hidePaths } from "./privacy";
 
-/** REA tools that would write names, comments and bookmarks behind Eleven's back, and the `eleven` tool to use instead. */
+/** REA tools that would write names, comments and bookmarks behind Unravel's back, and the `eleven` tool to use instead. */
 export const ELEVEN_OWNED: ReadonlyMap<string, string> = new Map([
   ["set_address_name", "rename_function"],
   ["set_addresses_names", "rename_function"],
@@ -19,14 +19,14 @@ export const ELEVEN_OWNED: ReadonlyMap<string, string> = new Map([
 ]);
 
 function refusal(tool: string, instead: string): CallToolResult {
-  return { isError: true, content: [{ type: "text", text: `${tool} isn't available here. Eleven keeps names, comments and bookmarks in the user's project, where they can see and undo them. Use the eleven server's ${instead} tool instead.` }] };
+  return { isError: true, content: [{ type: "text", text: `${tool} isn't available here. Unravel keeps names, comments and bookmarks in the user's project, where they can see and undo them. Use the eleven server's ${instead} tool instead.` }] };
 }
 
 function env(): Record<string, string> {
   return { ...Object.fromEntries(Object.entries(process.env).filter((entry): entry is [string, string] => entry[1] !== undefined)), ...reaEnv() };
 }
 
-/** REA for agents: every tool passes through except the ones whose changes belong in Eleven's project. */
+/** REA for agents: every tool passes through except the ones whose changes belong in Unravel's project. */
 export async function runReaProxy(): Promise<void> {
   const { command, args } = reaLaunch();
   const rea = new Client({ name: "eleven", version: "0.1.0" });

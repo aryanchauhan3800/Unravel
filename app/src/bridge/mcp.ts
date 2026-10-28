@@ -14,11 +14,11 @@ const caller: BridgeCaller = { agent: process.env[AGENT_ENV] || "Agent", chat: p
 
 function ask(tool: BridgeTool, args: Readonly<Record<string, string>>): Promise<string> {
   const path = process.env[BRIDGE_ENV];
-  if (!path) return Promise.reject(new Error("Eleven isn't running, so there is no view to drive."));
+  if (!path) return Promise.reject(new Error("Unravel isn't running, so there is no view to drive."));
   return new Promise((resolve, reject) => {
     const socket = connect(path);
     let buffer = "";
-    socket.on("error", (err) => reject(new Error(`Eleven didn't answer: ${err.message}`)));
+    socket.on("error", (err) => reject(new Error(`Unravel didn't answer: ${err.message}`)));
     socket.on("data", (chunk: Buffer) => {
       buffer += chunk.toString();
       const line = buffer.split("\n")[0];
@@ -26,7 +26,7 @@ function ask(tool: BridgeTool, args: Readonly<Record<string, string>>): Promise<
       socket.end();
       const reply: unknown = JSON.parse(line);
       if (isRecord(reply) && reply.ok === true && typeof reply.text === "string") resolve(reply.text);
-      else reject(new Error(isRecord(reply) && typeof reply.error === "string" ? reply.error : "Eleven couldn't do that."));
+      else reject(new Error(isRecord(reply) && typeof reply.error === "string" ? reply.error : "Unravel couldn't do that."));
     });
     socket.write(`${JSON.stringify({ id: nextId++, tool, args, from: caller })}\n`);
   });
@@ -40,34 +40,34 @@ async function run(tool: BridgeTool, args: Readonly<Record<string, string>>): Pr
   }
 }
 
-/** Eleven's own MCP server: lets any agent see and move the user's view, and annotate the project. */
+/** Unravel's own MCP server: lets any agent see and move the user's view, and annotate the project. */
 export async function runMcp(): Promise<void> {
   const server = new McpServer({ name: "eleven", version: "0.1.0" });
   server.registerTool("open_function", {
-    description: "Show a function in the user's Eleven window (code canvas and workbench). Use it whenever you start discussing a function, so the user sees what you see.",
+    description: "Show a function in the user's Unravel window (code canvas and workbench). Use it whenever you start discussing a function, so the user sees what you see.",
     inputSchema: { function: z.string().describe("Function name like entry or FUN_100001234, or its address like 0x100001234") },
   }, ({ function: fn }) => run("open_function", { function: fn }));
   server.registerTool("current_view", {
-    description: "What the user is looking at right now in Eleven: the file, function, address and view.",
+    description: "What the user is looking at right now in Unravel: the file, function, address and view.",
   }, () => run("current_view", {}));
   server.registerTool("set_view", {
     description: "Switch the user's code view to pseudocode, assembly, graph or hex.",
     inputSchema: { view: z.enum(["pseudocode", "assembly", "graph", "hex"]) },
   }, ({ view }) => run("set_view", { view }));
   server.registerTool("rename_function", {
-    description: "Give a function a meaningful name in the user's Eleven project (never changes the binary). Use it once you understand what a FUN_ function does.",
+    description: "Give a function a meaningful name in the user's Unravel project (never changes the binary). Use it once you understand what a FUN_ function does.",
     inputSchema: { function: z.string(), new_name: z.string().describe("A C identifier, like check_license_key") },
   }, (args) => run("rename_function", { function: args.function, new_name: args.new_name }));
   server.registerTool("add_note", {
-    description: "Save a short note on a function in the user's Eleven project, shown beside the code.",
+    description: "Save a short note on a function in the user's Unravel project, shown beside the code.",
     inputSchema: { function: z.string(), note: z.string() },
   }, (args) => run("add_note", { function: args.function, note: args.note }));
   server.registerTool("add_comment", {
-    description: "Comment one instruction or address in the user's Eleven project; it shows at the end of that line in assembly and the graph. An empty comment removes it.",
+    description: "Comment one instruction or address in the user's Unravel project; it shows at the end of that line in assembly and the graph. An empty comment removes it.",
     inputSchema: { address: z.string().describe("Hexadecimal, like 0x100003f2c"), comment: z.string() },
   }, (args) => run("add_comment", { address: args.address, comment: args.comment }));
   server.registerTool("bookmark", {
-    description: "Bookmark a function or address in the user's Eleven sidebar, with a short label.",
+    description: "Bookmark a function or address in the user's Unravel sidebar, with a short label.",
     inputSchema: { address: z.string().describe("A function name or hexadecimal address"), label: z.string() },
   }, (args) => run("bookmark", { address: args.address, label: args.label }));
   server.registerTool("propose_patch", {
@@ -75,7 +75,7 @@ export async function runMcp(): Promise<void> {
     inputSchema: { address: z.string().describe("Hexadecimal, like 0x100003f2c"), bytes: z.string().describe("Hex bytes, like 1f2003d5 or 90 90"), reason: z.string().describe("One sentence on what the patch does, shown to the user") },
   }, (args) => run("propose_patch", { address: args.address, bytes: args.bytes, reason: args.reason }));
   server.registerTool("set_code_type", {
-    description: "Mark what the bytes at an address are in the user's Eleven project, like Hopper's Modify menu: code, procedure (start a function), byte, word, dword, qword, cstring or undefined. Leave type empty to read them as code again. Ghidra re-reads the code and the user can undo it.",
+    description: "Mark what the bytes at an address are in the user's Unravel project, like Hopper's Modify menu: code, procedure (start a function), byte, word, dword, qword, cstring or undefined. Leave type empty to read them as code again. Ghidra re-reads the code and the user can undo it.",
     inputSchema: { address: z.string().describe("Hexadecimal, like 0x100003f2c"), type: z.string().describe("code, procedure, byte, word, dword, qword, cstring, undefined, or empty") },
   }, (args) => run("set_code_type", { address: args.address, type: args.type }));
   server.registerTool("set_number_format", {
@@ -89,11 +89,11 @@ export async function runMcp(): Promise<void> {
     description: "The newest GPU recording of the open app (Metal System Trace): frame time, how busy the GPU is, gaps between frames, and what the numbers suggest fixing.",
   }, () => run("gpu_profile", {}));
   server.registerTool("debug_start", {
-    description: "Run the open file under the debugger in the user's Eleven window, or attach to a running process by pid. It stops at the user's breakpoints (add your own with set_breakpoint first). Returns where it first stops, or that it is still running. This runs the program on the user's machine.",
+    description: "Run the open file under the debugger in the user's Unravel window, or attach to a running process by pid. It stops at the user's breakpoints (add your own with set_breakpoint first). Returns where it first stops, or that it is still running. This runs the program on the user's machine.",
     inputSchema: { pid: z.string().describe("A process id to attach to, or empty to launch the open file") },
   }, ({ pid }) => run("debug_start", { pid }));
   server.registerTool("debug_state", {
-    description: "The user's debug session in Eleven: whether the program is running or paused, where it is paused, the call stack, locals, registers and the newest program output.",
+    description: "The user's debug session in Unravel: whether the program is running or paused, where it is paused, the call stack, locals, registers and the newest program output.",
   }, () => run("debug_state", {}));
   server.registerTool("debug_control", {
     description: "Continue, pause or step the program in the user's debug session, then report where it is. Start a session with debug_start first.",
@@ -104,7 +104,7 @@ export async function runMcp(): Promise<void> {
     inputSchema: { expression: z.string() },
   }, ({ expression }) => run("debug_evaluate", { expression }));
   server.registerTool("set_breakpoint", {
-    description: "Add or remove a breakpoint at an instruction address in the user's Eleven project. It applies right away to a running session and the user can undo it.",
+    description: "Add or remove a breakpoint at an instruction address in the user's Unravel project. It applies right away to a running session and the user can undo it.",
     inputSchema: { address: z.string().describe("Hexadecimal, like 0x100003f2c"), on: z.boolean().describe("false removes it") },
   }, (args) => run("set_breakpoint", { address: args.address, on: String(args.on) }));
   await server.connect(new StdioServerTransport());

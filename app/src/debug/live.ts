@@ -56,7 +56,7 @@ async function until(ready: () => boolean): Promise<void> {
 /** Opens the debug view when it is closed, then starts a session from it. */
 export async function startDebugging(pid: number | null): Promise<string> {
   if (!starter && !opener) {
-    if (!workbench?.()) throw new Error("No file is open in Eleven. Ask the user to open one.");
+    if (!workbench?.()) throw new Error("No file is open in Unravel. Ask the user to open one.");
     await until(() => opener !== null);
   }
   if (!starter) {

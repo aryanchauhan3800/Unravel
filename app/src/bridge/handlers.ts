@@ -62,7 +62,7 @@ export function bridgeHandler(chat: () => Chat): (tool: BridgeTool, args: Readon
   return async (tool, args, from) => {
     const by: Author = { kind: "agent", agent: from.agent, chat: from.chat };
     const target = chat().target;
-    if (!target) throw new Error("No file is open in Eleven. Ask the user to open one.");
+    if (!target) throw new Error("No file is open in Unravel. Ask the user to open one.");
     const id = projectId(target);
     const procedures = target.arch === DALVIK ? await jadxProcedures(target.path, id) : await loadProcedures(target.path, id);
     switch (tool) {

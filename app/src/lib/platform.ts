@@ -10,15 +10,15 @@ export const OS: Os = process.platform === "darwin" ? "mac" : process.platform =
 
 const HOME = homedir();
 
-/** Where Eleven keeps your work and settings: Application Support, XDG data, or AppData. */
+/** Where Unravel keeps your work and settings: Application Support, XDG data, or AppData. */
 export function dataRoot(): string {
   switch (OS) {
     case "mac":
-      return join(HOME, "Library", "Application Support", "Eleven");
+      return join(HOME, "Library", "Application Support", "Unravel");
     case "linux":
-      return join(process.env.XDG_DATA_HOME || join(HOME, ".local", "share"), "eleven");
+      return join(process.env.XDG_DATA_HOME || join(HOME, ".local", "share"), "unravel");
     case "windows":
-      return join(process.env.APPDATA || join(HOME, "AppData", "Roaming"), "Eleven");
+      return join(process.env.APPDATA || join(HOME, "AppData", "Roaming"), "Unravel");
     default: {
       const unhandled: never = OS;
       return unhandled;
@@ -26,15 +26,15 @@ export function dataRoot(): string {
   }
 }
 
-/** Where Eleven keeps things it can rebuild: decompiled code, downloads, agent installs. */
+/** Where Unravel keeps things it can rebuild: decompiled code, downloads, agent installs. */
 export function cacheRoot(): string {
   switch (OS) {
     case "mac":
-      return join(HOME, "Library", "Caches", "eleven");
+      return join(HOME, "Library", "Caches", "unravel");
     case "linux":
-      return join(process.env.XDG_CACHE_HOME || join(HOME, ".cache"), "eleven");
+      return join(process.env.XDG_CACHE_HOME || join(HOME, ".cache"), "unravel");
     case "windows":
-      return join(process.env.LOCALAPPDATA || join(HOME, "AppData", "Local"), "Eleven", "Cache");
+      return join(process.env.LOCALAPPDATA || join(HOME, "AppData", "Local"), "Unravel", "Cache");
     default: {
       const unhandled: never = OS;
       return unhandled;

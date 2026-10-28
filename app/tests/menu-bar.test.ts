@@ -20,7 +20,7 @@ function find(menus: readonly MenuSpec[], id: CommandId): MenuItemSpec | undefin
 }
 
 test("menu bar: the macOS menus come in the usual order", () => {
-  expect(menuBar(context()).map((menu) => menu.label)).toEqual(["Eleven", "File", "Edit", "Navigate", "Modify", "View", "Agent", "Debug", "Window", "Help"]);
+  expect(menuBar(context()).map((menu) => menu.label)).toEqual(["Unravel", "File", "Edit", "Navigate", "Modify", "View", "Agent", "Debug", "Window", "Help"]);
 });
 
 test("menu bar: ⌘ and ⌃ shortcuts show beside their item, one-key shortcuts do not", () => {

@@ -21,7 +21,7 @@ function callerOf(value: unknown): BridgeCaller {
 async function answer(line: string, handle: BridgeHandler): Promise<BridgeReply> {
   const request: unknown = JSON.parse(line);
   const id = isRecord(request) && typeof request.id === "number" ? request.id : 0;
-  if (!isRecord(request) || !isBridgeTool(request.tool)) return { id, ok: false, error: "Eleven doesn't know that tool." };
+  if (!isRecord(request) || !isBridgeTool(request.tool)) return { id, ok: false, error: "Unravel doesn't know that tool." };
   try {
     return { id, ok: true, text: await handle(request.tool, stringArgs(request.args), callerOf(request.from)) };
   } catch (err) {

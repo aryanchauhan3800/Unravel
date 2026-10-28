@@ -50,8 +50,8 @@ export function enabledSkills(): readonly Skill[] {
   return loadSkills().filter((skill) => !off.includes(skill.name));
 }
 
-/** The prompt Eleven sends when the user runs a skill: the playbook, then whatever they added after it. */
-const PLAYBOOK = /^Follow this Eleven playbook, "([^"]+)"\.\n[\s\S]*?(?:\n\nThe user added: ([\s\S]*))?$/;
+/** The prompt Unravel sends when the user runs a skill: the playbook, then whatever they added after it. */
+const PLAYBOOK = /^Follow this (?:Unravel|Eleven) playbook, "([^"]+)"\.\n[\s\S]*?(?:\n\nThe user added: ([\s\S]*))?$/;
 
 export function playbookTitle(name: string): string {
   const words = name.replace(/[-_]/g, " ");
@@ -67,5 +67,5 @@ export function shownText(text: string): string {
 
 export function skillPrompt(skill: Skill, rest: string): string {
   const extra = rest.trim();
-  return [`Follow this Eleven playbook, "${skill.name}".`, "", skill.body, ...(extra ? ["", `The user added: ${extra}`] : [])].join("\n");
+  return [`Follow this Unravel playbook, "${skill.name}".`, "", skill.body, ...(extra ? ["", `The user added: ${extra}`] : [])].join("\n");
 }

@@ -13,7 +13,7 @@ declare global {
 /** The window keeps one bridge across hot reloads; it always answers with the chat currently on screen. */
 export function startAppBridge(): void {
   globalThis.elevenBridge ??= startBridge(bridgeHandler(() => {
-    if (!latest) throw new Error("Eleven is still starting.");
+    if (!latest) throw new Error("Unravel is still starting.");
     return latest;
   }));
 }

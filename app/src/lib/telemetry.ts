@@ -22,8 +22,8 @@ export type CrashReport = {
   readonly at: number;
 };
 
-const ENDPOINT = process.env.ELEVEN_TELEMETRY ?? "https://eleven.chizi.app/api";
-const ENABLED = !FROM_SOURCE || process.env.ELEVEN_TELEMETRY !== undefined;
+const ENDPOINT = process.env.UNRAVEL_TELEMETRY ?? process.env.ELEVEN_TELEMETRY ?? "https://unravel.chizi.app/api";
+const ENABLED = !FROM_SOURCE || process.env.UNRAVEL_TELEMETRY !== undefined || process.env.ELEVEN_TELEMETRY !== undefined;
 const QUEUE = supportPath("crashes");
 const DEVICE_FILE = supportPath("device-id");
 const HOME = homedir();

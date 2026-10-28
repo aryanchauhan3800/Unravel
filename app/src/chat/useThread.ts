@@ -53,26 +53,26 @@ const PAST_CHARS = 1500;
 function opening(target: Target | null): readonly string[] {
   if (!target) {
     return [
-      "You are working inside Eleven, a reverse-engineering app. No file is open yet.",
+      "You are working inside Unravel, a reverse-engineering app. No file is open yet.",
       `When the user names a binary or app to study: ${engineHint("<that path>", "")}`,
       `If it is an Android app (an APK or .dex): ${androidHint("<that path>")}`,
     ];
   }
   if (target.kind === "gpu") {
     return [
-      `You are working inside Eleven, a reverse-engineering app. The user opened the GPU code file ${target.original}.`,
-      "It holds shaders or kernels, not a program, so don't open it with open_binary. Eleven already lists its kernels in the workbench with their registers, memory, parameters and code (PTX for CUDA, metadata for HIP). Read the file's bytes yourself only if you need more than that.",
+      `You are working inside Unravel, a reverse-engineering app. The user opened the GPU code file ${target.original}.`,
+      "It holds shaders or kernels, not a program, so don't open it with open_binary. Unravel already lists its kernels in the workbench with their registers, memory, parameters and code (PTX for CUDA, metadata for HIP). Read the file's bytes yourself only if you need more than that.",
     ];
   }
   if (target.kind === "model") {
     return [
-      `You are working inside Eleven, a reverse-engineering app. The user opened the model file ${target.original}.`,
-      "It holds weights, not a program, so don't open it with open_binary. Eleven already shows its header, tensors and load risks in the model panel next to this chat. Read the file's bytes yourself only if you need more than that.",
+      `You are working inside Unravel, a reverse-engineering app. The user opened the model file ${target.original}.`,
+      "It holds weights, not a program, so don't open it with open_binary. Unravel already shows its header, tensors and load risks in the model panel next to this chat. Read the file's bytes yourself only if you need more than that.",
     ];
   }
   const slice = target.path === target.original ? "" : ` (analyze ${target.path}, the ${target.arch} slice)`;
   return [
-    `You are working inside Eleven, a reverse-engineering app. The user opened ${target.original}${slice}.`,
+    `You are working inside Unravel, a reverse-engineering app. The user opened ${target.original}${slice}.`,
     engineHint(target.path, target.arch),
   ];
 }
@@ -90,8 +90,8 @@ function transcript(messages: readonly Message[]): readonly string[] {
 function firstPrompt(target: Target | null, past: readonly Message[], text: string): string {
   return [
     ...opening(target),
-    `Only use Eleven's tools (eleven and eleven-rea). Never use your own built-in reverse-engineering tools or other disassemblers such as Hopper, IDA or a separate Ghidra, even if one is installed. eleven-rea runs Ghidra on ${THIS_DEVICE}.`,
-    "When you study a function, read it with procedure_pseudo_code so it appears in Eleven's code panel.",
+    `Only use Unravel's tools (unravel / eleven and unravel-rea / eleven-rea). Never use your own built-in reverse-engineering tools or other disassemblers such as Hopper, IDA or a separate Ghidra, even if one is installed. The rea tools run Ghidra on ${THIS_DEVICE}.`,
+    "When you study a function, read it with procedure_pseudo_code so it appears in Unravel's code panel.",
     "Answer plainly and briefly, in markdown. Put any code, disassembly, addresses or symbol names in fenced code blocks or inline `code` so they read in the code font.",
     ...transcript(past),
     "",

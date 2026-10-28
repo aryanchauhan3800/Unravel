@@ -164,7 +164,7 @@ function ProjectCard({ entry, current, chats, onOpen, onChanged, onProblem }: {
   );
 }
 
-/** Every project, one `.eleven` file each in Documents/Eleven: open, reveal, copy, rename or drop one from the list. */
+/** Every project, one `.unravel` or `.eleven` file each in Documents/Unravel: open, reveal, copy, rename or drop one from the list. */
 export function ProjectsPage({ chat, onOpen }: { readonly chat: Chat; readonly onOpen: (target: Target) => void }): ReactElement {
   const { p } = useTheme();
   const { settings } = useSettings();
