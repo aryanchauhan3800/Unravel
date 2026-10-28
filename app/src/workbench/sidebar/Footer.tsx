@@ -271,10 +271,10 @@ function ElevenMenu({ menu, onMenu }: { readonly menu: FooterMenu; readonly onMe
   const close = (): void => onMenu({ open: false, sub: null });
   return (
     <Card width={MENU_WIDTH}>
-      <Group title="Eleven">
+      <Group title="Unravel">
         <div style={{ display: "flex", alignItems: "center", gap: 10, height: 36, paddingLeft: INSET, paddingRight: INSET }}>
           <img src={appIcon(p.icon)} style={{ width: 20, height: 20, borderRadius: 5 }} />
-          <div style={{ flexGrow: 1, minWidth: 0, color: p.text3, ...ELLIPSIS }}>{`Eleven ${appVersion()}`}</div>
+          <div style={{ flexGrow: 1, minWidth: 0, color: p.text3, ...ELLIPSIS }}>{`Unravel ${appVersion()}`}</div>
           <IconButton icon="more" label={t("menu.about")} size={24} iconSize={15} onClick={() => { close(); openSettings("about"); }} />
         </div>
       </Group>
@@ -311,7 +311,7 @@ export function Footer({ menu, onMenu }: { readonly menu: FooterMenu; readonly o
       <div style={{ display: "flex", flexGrow: 1, minWidth: 0, position: "relative" }}>
         <div onClick={() => onMenu({ open: !menu.open, sub: null })} role="button" aria-expanded={menu.open} aria-label={t("workbench.side.menu")} style={{ display: "flex", alignItems: "center", gap: 10, flexGrow: 1, minWidth: 0, height: 36, paddingLeft: INSET, paddingRight: INSET, borderRadius: 8, cursor: "pointer", hover: HOVER, ...(menu.open ? { backgroundColor: p.sel } : {}) }}>
           <img src={appIcon(p.icon)} style={{ width: 22, height: 22, borderRadius: 6, pointerEvents: "none" }} />
-          <div style={{ flexGrow: 1, minWidth: 0, color: p.text3, pointerEvents: "none" }}>Eleven</div>
+          <div style={{ flexGrow: 1, minWidth: 0, color: p.text3, pointerEvents: "none" }}>Unravel</div>
           <Icon name="disclosure" size={12} color={p.faint} />
         </div>
         {menu.open && (

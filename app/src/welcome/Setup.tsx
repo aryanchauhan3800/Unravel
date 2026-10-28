@@ -81,7 +81,7 @@ export function Setup({ chat, onDone }: { readonly chat: Chat; readonly onDone: 
         <div style={{ display: "flex", flexDirection: "column", gap: 20, width: "100%", maxWidth: 640, flexShrink: 0 }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10 }}>
             <img src={appIcon(p.icon)} style={{ width: 32, height: 32 }} />
-            <div style={{ fontSize: 17, fontWeight: 600 }}>Eleven</div>
+            <div style={{ fontSize: 17, fontWeight: 600 }}>Unravel</div>
           </div>
           <StepNav current={step} onGo={setStep} />
           {body()}

@@ -295,7 +295,7 @@ export function buildPages(c: Ctx): Readonly<Record<Page, readonly GroupModel[]>
   };
   const recordings = confirmed("clear-rec", t("settings.recordings.deleteConfirm"), t("settings.delete"), clearRecordings, t("settings.recordings.deleted"));
   const recordings2 = { ...recordings, id: "clear-rec2" };
-  const exportDir = s.exportDir || join(homedir(), "Downloads", "Eleven");
+  const exportDir = s.exportDir || join(homedir(), "Downloads", "Unravel");
   const all = t("settings.all");
   return {
     general: [
@@ -366,7 +366,7 @@ export function buildPages(c: Ctx): Readonly<Record<Page, readonly GroupModel[]>
         input(c, "customAgent", t("settings.customAgent"), t("settings.customAgent.desc"), "my-agent --acp", t("settings.customAgent.done")),
       ] },
       { label: t("settings.group.tools"), foot: t("settings.tools.foot"), rows: [
-        tg("elevenTools", "Eleven", t("settings.elevenTools.desc"), { lead: { kind: "img", src: appIcon(c.icon) }, keywords: "mcp tool server" }),
+        tg("elevenTools", "Unravel", t("settings.elevenTools.desc"), { lead: { kind: "img", src: appIcon(c.icon) }, keywords: "mcp tool server" }),
         tg("reaTools", t("settings.reaTools"), t("settings.reaTools.desc"), { lead: { kind: "img", src: join(ENGINES_DIR, "rea.svg") }, keywords: "mcp tool server" }),
         tg("idaTools", "IDA Pro", t("settings.idaTools.desc"), { lead: { kind: "img", src: ENGINE_LOGO.ida }, keywords: "mcp tool server" }),
         input(c, "customToolServer", t("settings.customToolServer"), t("settings.customToolServer.desc"), "npx my-mcp-server", t("settings.customToolServer.done")),
@@ -492,7 +492,7 @@ export function buildPages(c: Ctx): Readonly<Record<Page, readonly GroupModel[]>
     ],
     about: [
       { label: null, rows: [
-        info("Eleven", t("settings.about.version", { version: app.version, chip: process.arch === "arm64" ? t("settings.about.appleSilicon") : "Intel", update: updateShort(app) }), { lead: { kind: "img", src: appIcon(c.icon) }, buttons: app.download ? [btn(t("settings.download"), () => openLink(app.download ?? ""), "primary")] : [btn(t("settings.about.checkUpdates"), c.checkApp)] }),
+        info("Unravel", t("settings.about.version", { version: app.version, chip: process.arch === "arm64" ? t("settings.about.appleSilicon") : "Intel", update: updateShort(app) }), { lead: { kind: "img", src: appIcon(c.icon) }, buttons: app.download ? [btn(t("settings.download"), () => openLink(app.download ?? ""), "primary")] : [btn(t("settings.about.checkUpdates"), c.checkApp)] }),
         info(t("settings.about.whatsNew"), t("settings.about.whatsNew.desc"), { buttons: [btn(t("settings.open"), () => { openLink(RELEASE_NOTES); c.toast(t("settings.about.whatsNew.opened")); })] }),
         info(t("settings.about.support"), t("settings.about.support.desc"), { keywords: "donate sponsor fund", buttons: [btn(t("settings.about.sponsor"), () => { openLink(SPONSOR); opened(); })] }),
       ] },

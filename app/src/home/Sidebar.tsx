@@ -168,9 +168,9 @@ function AppMenu({ actions }: { readonly actions: AppMenuActions }): ReactElemen
   return (
     <Row gap={2} style={{ marginTop: 8 }}>
       <div style={{ display: "flex", flexGrow: 1, minWidth: 0 }}>
-      <div onMouseDown={menu.onTriggerDown} onClick={menu.onTriggerClick} role="button" aria-label="Eleven" aria-expanded={menu.open} style={{ display: "flex", alignItems: "center", gap: 9, flexGrow: 1, minWidth: 0, height: 34, paddingLeft: 8, paddingRight: 8, borderRadius: 8, cursor: "pointer", hover: { opacity: 0.72 }, ...rowStyle(menu.open, p.sel) }}>
+      <div onMouseDown={menu.onTriggerDown} onClick={menu.onTriggerClick} role="button" aria-label="Unravel" aria-expanded={menu.open} style={{ display: "flex", alignItems: "center", gap: 9, flexGrow: 1, minWidth: 0, height: 34, paddingLeft: 8, paddingRight: 8, borderRadius: 8, cursor: "pointer", hover: { opacity: 0.72 }, ...rowStyle(menu.open, p.sel) }}>
         <img src={appIcon(p.icon)} style={{ width: 20, height: 20, borderRadius: 5 }} />
-        <div style={{ flexGrow: 1, color: p.text3 }}>Eleven</div>
+        <div style={{ flexGrow: 1, color: p.text3 }}>Unravel</div>
         <Icon name="chevron-up" size={11} color={p.muted} />
       </div>
         {menu.open && (

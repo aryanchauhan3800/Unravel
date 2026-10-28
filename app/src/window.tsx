@@ -24,9 +24,9 @@ const initial: Target | null = initialPath ? prepareTarget(initialPath) : null;
 const { transparency, frost } = currentSettings();
 
 render(<Fonts><App initial={initial} /></Fonts>, {
-  title: "Eleven",
-  appName: "Eleven",
-  appId: "eleven",
+  title: "Unravel",
+  appName: "Unravel",
+  appId: "unravel",
   width: 1440,
   height: 900,
   minWidth: 960,

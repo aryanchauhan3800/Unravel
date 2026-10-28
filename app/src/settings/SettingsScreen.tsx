@@ -118,7 +118,7 @@ export function SettingsScreen({ initial = "general", onBack, onSetup }: { reado
     checkEngine: (id) => void checkEngine(id),
     copyDetails: () => void (async () => {
       const details = [
-        `Eleven ${appVersion()} (${process.arch}, ${OS_NAME} ${release()})`,
+        `Unravel ${appVersion()} (${process.arch}, ${OS_NAME} ${release()})`,
         `Engine: ${activeEngine()?.name ?? "none"}`,
         `Rizin: ${info.engines.rizin.version ?? "not found"}`,
         `Ghidra: ${info.engines.ghidra.version ?? "not found"}`,
