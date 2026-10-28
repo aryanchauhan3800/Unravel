@@ -1,0 +1,31 @@
+# Rust
+/target
+/crates/**/target
+
+# App (Bun / TypeScript)
+node_modules
+app/build
+*.tsbuildinfo
+
+# Decompiler output and launch video renders
+app/app-debug
+app/hello
+launch/
+
+# Local env, logs and recordings
+.env
+.env.*
+*.log
+*.trace
+
+# Editor and OS
+.DS_Store
+.idea
+.vscode
+*.swp
+
+# Agent and tool scratch
+CLAUDE.local.md
+.agents/
+.claude/
+site/
