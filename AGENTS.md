@@ -1,7 +1,7 @@
-# Eleven
+# Unravel
 
 Agent-first reverse-engineering app (a READE): the 2026 successor to Hopper.
-Any ACP agent works through REA (Ghidra headless) and Eleven's own tools.
+Any ACP agent works through REA (Ghidra headless) and Unravel's own tools.
 
 ## Layout
 
@@ -17,8 +17,8 @@ Any ACP agent works through REA (Ghidra headless) and Eleven's own tools.
   - `agents/`: ACP client, registry, native agent detection.
   - `components/`: shared UI (kit, ui, code, ContextMenu, MenuRows, Toast, ErrorBoundary, KeymapIcon). Feature-only components stay in their feature folder.
   - `engine/`: `rea.ts`, `procedures.ts`, `dossier.ts`, `toolchain.ts`, `project.ts`, `target.ts`: one shared REA client, function lists, per-function dossiers (blocks/refs), Ghidra/Java/REA discovery, project file, opened target.
-  - `bridge/`: Eleven's own MCP server (the `eleven` tools: open_function, set_view, rename_function, add_note, set_code_type, set_number_format, gpu_profile), served to every agent so it can drive the window.
-  - `skills/` (and src/skills/load.ts): Eleven's built-in reverse-engineering playbooks, shown in the composer / palette; any agent can run them.
+  - `bridge/`: Unravel's own MCP server (the `eleven` tools: open_function, set_view, rename_function, add_note, set_code_type, set_number_format, gpu_profile), served to every agent so it can drive the window.
+  - `skills/` (and src/skills/load.ts): Unravel's built-in reverse-engineering playbooks, shown in the composer / palette; any agent can run them.
 
 ## Commands (run in `app/`)
 
@@ -26,16 +26,16 @@ Any ACP agent works through REA (Ghidra headless) and Eleven's own tools.
 - `bunx tsc --noEmit --noUnusedLocals`: typecheck (covers src, tests, scripts).
 - `./script/test`: runs the deterministic test files one at a time (parallel Ghidra JVMs thrash the machine). `bun test <file>` for one file while iterating. `*.live.test.tsx` call a real agent and are excluded.
 - `bun scripts/gate-m1.ts <file...>`: engine-level open and read timing.
-- `./script/bundle-macos`: builds `build/Eleven.app` (bundle id app.chizi.eleven).
-- `./script/package`: builds, ad-hoc signs (or ELEVEN_SIGN_IDENTITY) and zips the app to build/Eleven-<version>-<arch>.zip.
+- `./script/bundle-macos`: builds `build/Unravel.app` (bundle id app.chizi.eleven).
+- `./script/package`: builds, ad-hoc signs (or ELEVEN_SIGN_IDENTITY) and zips the app to build/Unravel-<version>-<arch>.zip.
 - `install.sh` (repo root): curl installer; downloads the release zip for the arch and installs to /Applications.
 
 ## Environment
 
-- REA must be 6.x. Eleven finds a checkout next to this repo (`../rea`), the copy bundled in Eleven.app, or `ELEVEN_REA`. Older `rea` builds on PATH refuse Ghidra on Apple Silicon.
+- REA must be 6.x. Unravel finds a checkout next to this repo (`../rea`), the copy bundled in Unravel.app, or `ELEVEN_REA`. Older `rea` builds on PATH refuse Ghidra on Apple Silicon.
 - Ghidra 12.x, found in `~/.local/share`, `~/Applications` or `GHIDRA_INSTALL_DIR`. The JDK is found automatically.
 - Android apps read through jadx (never Ghidra); apktool, when installed, gives smali. `.xapk`/`.apks`/`.zip` split bundles open their base APK with the splits beside it.
-- Pinned npx agent versions can fail behind an npm `before` quarantine, so Eleven unpins them.
+- Pinned npx agent versions can fail behind an npm `before` quarantine, so Unravel unpins them.
 
 ## Rules
 
