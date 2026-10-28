@@ -1,19 +1,21 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/images/icon-dark.png">
-    <img src="docs/images/icon-light.png" width="128" alt="Unravel">
+    <img src="docs/images/icon-light.png" width="128" alt="Unravel Logo">
   </picture>
 </p>
 
 <h1 align="center">Unravel</h1>
 
-<p align="center">An agent-first reverse-engineering app for macOS, Windows and Linux.</p>
+<p align="center">
+  <strong>Agent-first reverse-engineering application for macOS, Windows, and Linux.</strong>
+</p>
 
-<div align="center">
-
-**English** · [简体中文](README_zh.md) · [繁體中文](README_zh-TW.md) · [日本語](README_ja.md) · [한국어](README_ko.md) · [Türkçe](README_tr.md) · [Русский](README_ru.md) · [Tiếng Việt](README_vi.md) · [ไทย](README_th.md) · [Deutsch](README_de.md) · [Español](README_es.md) · [Français](README_fr.md) · [Українська](README_uk.md) · [Polski](README_pl.md) · [Português (Brasil)](README_pt-BR.md) · [العربية](README_ar.md) · [فارسی](README_fa.md) · [Bahasa Indonesia](README_id.md) · [Italiano](README_it.md)
-
-</div>
+<p align="center">
+  <a href="https://github.com/aryanchauhan3800/Unravel/releases"><img src="https://img.shields.io/github/v/release/aryanchauhan3800/Unravel?include_prereleases&style=flat-square" alt="Release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue?style=flat-square" alt="License"></a>
+  <a href="https://github.com/aryanchauhan3800/Unravel/stargazers"><img src="https://img.shields.io/github/stars/aryanchauhan3800/Unravel?style=flat-square" alt="Stars"></a>
+</p>
 
 <p align="center">
   <img src="docs/images/home.png" width="820" alt="Unravel home screen">
@@ -44,7 +46,7 @@ Native code is read by [Ghidra](https://ghidra-sre.org) through [REA](https://gi
 
 ## Support Unravel
 
-Unravel is free and open source. If it saves you time, starring the repository on GitHub or [sponsoring on GitHub](https://github.com/sponsors/aryanchauhan3800) helps support ongoing development.
+Unravel is free and open source. If it saves you time, starring the repository or [sponsoring on GitHub](https://github.com/sponsors/aryanchauhan3800) helps support ongoing development.
 
 ## Install
 
@@ -74,7 +76,7 @@ Android apps also need [jadx](https://github.com/skylot/jadx). [apktool](https:/
 
 ## Build from source
 
-You need [Bun](https://bun.sh), Node 20 or newer, Ghidra and a JDK as above, and a checkout of REA 6.x next to this repo (`../rea`), or `UNRAVEL_REA` / `ELEVEN_REA` pointing at one.
+You need [Bun](https://bun.sh), Node 20 or newer, Ghidra and a JDK as above, and a checkout of REA 6.x next to this repo (`../rea`), or `UNRAVEL_REA` (or `ELEVEN_REA`) pointing at one.
 
 ```sh
 git clone https://github.com/aryanchauhan3800/Unravel.git
@@ -116,15 +118,16 @@ All of these are optional. Unravel finds the usual install spots on its own.
 
 - [MCP tools](docs/mcp-tools.md): every tool agents get in Unravel, what each one takes and returns, permissions and privacy.
 - [Skills](docs/skills.md): the built-in playbooks and how to write your own.
+- [AGENTS.md](AGENTS.md): how the code is laid out and the rules it follows.
+- [CONTRIBUTING.md](CONTRIBUTING.md): how to contribute bug fixes and improvements.
 
 ## Repository
 
 - `app/` is the app: React and TypeScript on GPUIX.
 - `launch/` is the launch video, made with Remotion.
-- `install.sh` is the installer.
-
-See [AGENTS.md](AGENTS.md) for how the code is laid out and the rules it follows.
+- `install.sh` and `install.ps1` are the installers.
 
 ## License
 
 Unravel is released under the [Apache License 2.0](LICENSE). Bundled third-party code is listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Agent logos belong to their owners and appear only to identify those agents.
+# Unravel
