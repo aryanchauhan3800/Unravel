@@ -7,18 +7,23 @@ $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 
 $Repo = if ($env:UNRAVEL_REPO) { $env:UNRAVEL_REPO } elseif ($env:ELEVEN_REPO) { $env:ELEVEN_REPO } else { "aryanchauhan3800/Unravel" }
-$Mirror = if ($env:UNRAVEL_MIRROR) { $env:UNRAVEL_MIRROR } elseif ($env:ELEVEN_MIRROR) { $env:ELEVEN_MIRROR } else { "https://dl.chizi.app" }
+$Mirror = if ($env:UNRAVEL_MIRROR) { $env:UNRAVEL_MIRROR } elseif ($env:ELEVEN_MIRROR) { $env:ELEVEN_MIRROR } else { $null }
 $Dest = if ($env:UNRAVEL_DEST) { $env:UNRAVEL_DEST } elseif ($env:ELEVEN_DEST) { $env:ELEVEN_DEST } else { Join-Path $env:LOCALAPPDATA "Programs\Unravel" }
 
 function Find-Release {
+  if ($Mirror) {
+    try {
+      $version = (Invoke-RestMethod "$Mirror/latest.json").version
+      $url = "$Mirror/v$version/Unravel-$version-windows-x64.zip"
+      Invoke-WebRequest $url -Method Head -UseBasicParsing | Out-Null
+      return $url
+    } catch {}
+  }
   try {
-    $version = (Invoke-RestMethod "$Mirror/latest.json").version
-    $url = "$Mirror/v$version/Unravel-$version-windows-x64.zip"
-    Invoke-WebRequest $url -Method Head -UseBasicParsing | Out-Null
-    return $url
+    $release = Invoke-RestMethod "https://api.github.com/repos/$Repo/releases/latest"
+    return ($release.assets | Where-Object { $_.name -like "Unravel-*-windows-x64.zip" } | Select-Object -First 1).browser_download_url
   } catch {}
-  $release = Invoke-RestMethod "https://api.github.com/repos/$Repo/releases/latest"
-  return ($release.assets | Where-Object { $_.name -like "Unravel-*-windows-x64.zip" -or $_.name -like "Eleven-*-windows-x64.zip" } | Select-Object -First 1).browser_download_url
+  return $null
 }
 
 $url = if ($env:UNRAVEL_RELEASE_URL) { $env:UNRAVEL_RELEASE_URL } else { $env:ELEVEN_RELEASE_URL }

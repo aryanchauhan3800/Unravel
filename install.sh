@@ -9,8 +9,8 @@
 set -euo pipefail
 
 REPO="${UNRAVEL_REPO:-${ELEVEN_REPO:-aryanchauhan3800/Unravel}}"
-MIRROR="${UNRAVEL_MIRROR:-${ELEVEN_MIRROR:-https://dl.chizi.app}}"
-DEST="${UNRAVEL_DEST:-${ELEVEN_DEST:-/Applications}}"
+MIRROR="${UNRAVEL_MIRROR:-${ELEVEN_MIRROR:-}}"
+DEST="${UNRAVEL_DEST:-${ELEVEN_DEST:-${DEST:-/Applications}}}"
 arch="$(uname -m)"
 
 if [ "$(uname -s)" != "Darwin" ]; then
@@ -19,8 +19,8 @@ if [ "$(uname -s)" != "Darwin" ]; then
 fi
 
 url="${UNRAVEL_RELEASE_URL:-${ELEVEN_RELEASE_URL:-}}"
-if [ -z "$url" ]; then
-  echo "Finding the latest Unravel release…"
+if [ -z "$url" ] && [ -n "$MIRROR" ]; then
+  echo "Finding the latest Unravel release from mirror…"
   version="$(curl -fsSL "$MIRROR/latest.json" 2>/dev/null | grep -o '"version":"[^"]*"' | cut -d'"' -f4 || true)"
   if [ -n "$version" ]; then
     url="$MIRROR/v$version/Unravel-$version-$arch.zip"
@@ -28,11 +28,13 @@ if [ -z "$url" ]; then
   fi
 fi
 if [ -z "$url" ]; then
+  echo "Finding the latest Unravel release on GitHub…"
   url="$(curl -fsSL "https://api.github.com/repos/$REPO/releases/latest" \
-    | grep -o "https://[^\"]*Unravel-[^\"]*-$arch\.zip" | head -1)"
+    | grep -o "https://[^\"]*Unravel-[^\"]*-$arch\.zip" | head -1 || true)"
 fi
 if [ -z "$url" ]; then
-  echo "No release found for $arch. Set UNRAVEL_RELEASE_URL to a zip." >&2
+  echo "No Unravel release found for $arch on https://github.com/$REPO/releases." >&2
+  echo "Please publish a release or set UNRAVEL_RELEASE_URL to a zip." >&2
   exit 1
 fi
 

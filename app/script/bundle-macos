@@ -41,7 +41,8 @@ if xcrun actool "$repo/assets/Eleven.icon" \
   --output-partial-info-plist "$out/Contents/Resources/.icon.plist" > /dev/null 2>&1; then
   rm -f "$out/Contents/Resources/.icon.plist"
 else
-  cp "$app_dir/script/macos-icon/Assets.car" "$app_dir/script/macos-icon/Unravel.icns" "$out/Contents/Resources/Unravel.icns"
+  cp "$app_dir/script/macos-icon/Assets.car" "$out/Contents/Resources/Assets.car"
+  cp "$app_dir/script/macos-icon/Unravel.icns" "$out/Contents/Resources/Unravel.icns"
   cp "$app_dir/script/macos-icon/Unravel.icns" "$out/Contents/Resources/Eleven.icns"
 fi
 cp "$repo/assets/UnravelDocument.icns" "$out/Contents/Resources/UnravelDocument.icns"
@@ -57,7 +58,8 @@ cat > "$out/Contents/Info.plist" <<PLIST
   <key>CFBundleIdentifier</key><string>app.chizi.unravel</string>
   <key>CFBundleExecutable</key><string>Unravel</string>
   <key>CFBundlePackageType</key><string>APPL</string>
-  <key>CFBundleIconFile</key><string>Unravel.icns</string>
+  <key>CFBundleIconFile</key><string>Unravel</string>
+  <key>CFBundleIconName</key><string>Unravel</string>
   <key>CFBundleShortVersionString</key><string>$version</string>
   <key>CFBundleVersion</key><string>$version</string>
   <key>UTExportedTypeDeclarations</key>
@@ -94,8 +96,6 @@ cat > "$out/Contents/Info.plist" <<PLIST
       </array>
     </dict>
   </array>
-  <key>CFBundleIconFile</key><string>Eleven</string>
-  <key>CFBundleIconName</key><string>Eleven</string>
   <key>LSMinimumSystemVersion</key><string>14.0</string>
   <key>NSHighResolutionCapable</key><true/>
   <key>ATSApplicationFontsPath</key><string>fonts</string>
