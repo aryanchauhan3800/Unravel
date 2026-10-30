@@ -16,7 +16,7 @@ export type ByteEdit = Patch;
 type Placed = { readonly offset: number; readonly bytes: readonly number[] };
 
 function patchDir(): string {
-  return pathSetting("exportDir", "ELEVEN_EXPORT_DIR") ?? join(homedir(), "Downloads", "Eleven");
+  return pathSetting("exportDir", "UNRAVEL_EXPORT_DIR") ?? pathSetting("exportDir", "ELEVEN_EXPORT_DIR") ?? join(homedir(), "Downloads", "Unravel");
 }
 
 function safe(name: string): string {
@@ -77,7 +77,7 @@ async function writeCopy(program: Program, all: readonly Patch[]): Promise<strin
   await mkdir(dir, { recursive: true });
   const path = join(dir, patchedName(program.name));
   await writeFile(path, buffer);
-  if (currentSettings().revealExports && !pathSetting("exportDir", "ELEVEN_EXPORT_DIR")) reveal(path);
+  if (currentSettings().revealExports && !pathSetting("exportDir", "UNRAVEL_EXPORT_DIR") && !pathSetting("exportDir", "ELEVEN_EXPORT_DIR")) reveal(path);
   return path;
 }
 

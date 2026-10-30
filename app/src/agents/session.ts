@@ -30,7 +30,7 @@ type Answer = (choiceId: string | null) => void;
 
 const STDERR_TAIL = 2000;
 const EXIT_GRACE_MS = 400;
-const PASS_THROUGH_ENV = ["GHIDRA_INSTALL_DIR", "JAVA_HOME", "PATH", "HOME", "ELEVEN_REA", "ELEVEN_SUPPORT", "SystemRoot", "USERPROFILE", "APPDATA", "LOCALAPPDATA", "TEMP", "TMP", "PATHEXT"] as const;
+const PASS_THROUGH_ENV = ["GHIDRA_INSTALL_DIR", "JAVA_HOME", "PATH", "HOME", "UNRAVEL_REA", "UNRAVEL_SUPPORT", "ELEVEN_REA", "ELEVEN_SUPPORT", "SystemRoot", "USERPROFILE", "APPDATA", "LOCALAPPDATA", "TEMP", "TMP", "PATHEXT"] as const;
 
 /** Eleven itself, started with `flag` to serve one of its MCP servers. */
 function selfServer(name: string, flag: string, env: acp.EnvVariable[]): acp.McpServer {

@@ -100,7 +100,7 @@ Android apps also need [jadx](https://github.com/skylot/jadx). [apktool](https:/
 
 ## Build from source
 
-You need [Bun](https://bun.sh), Node 20 or newer, Ghidra and a JDK as above, and a checkout of REA 6.x next to this repo (`../rea`), or `UNRAVEL_REA` (or `ELEVEN_REA`) pointing at one.
+You need [Bun](https://bun.sh), Node 20 or newer, Ghidra and a JDK as above, and a checkout of REA 6.x next to this repo (`../rea`), or `UNRAVEL_REA` pointing at one.
 
 ```sh
 git clone https://github.com/aryanchauhan3800/Unravel.git
@@ -127,16 +127,16 @@ All of these are optional. Unravel finds the usual install spots on its own.
 | --- | --- |
 | `GHIDRA_INSTALL_DIR` | Ghidra install to use |
 | `JAVA_HOME` | JDK to run Ghidra with |
-| `UNRAVEL_REA` / `ELEVEN_REA` | REA to use instead of the bundled one |
-| `UNRAVEL_RIZIN` / `ELEVEN_RIZIN` | Rizin to use |
-| `UNRAVEL_JADX` / `ELEVEN_JADX` | jadx to use for Android apps |
-| `UNRAVEL_APKTOOL` / `ELEVEN_APKTOOL` | apktool to use for smali |
-| `UNRAVEL_LLDB_DAP` / `ELEVEN_LLDB_DAP` | `lldb-dap` for the debugger |
-| `UNRAVEL_SUPPORT` / `ELEVEN_SUPPORT` | Where Unravel keeps projects and settings |
-| `UNRAVEL_CACHE` / `ELEVEN_CACHE` | Where Unravel caches decompiled code |
-| `UNRAVEL_PROJECTS_DIR` / `ELEVEN_PROJECTS_DIR` | Where the save dialog starts (default `~/Documents/Unravel`) |
-| `UNRAVEL_EXPORT_DIR` / `ELEVEN_EXPORT_DIR` | Where exports and patched copies go (default `~/Downloads/Unravel`) |
-| `UNRAVEL_SIGN_IDENTITY` / `ELEVEN_SIGN_IDENTITY` | Code-signing identity for `./script/package` |
+| `UNRAVEL_REA` | REA to use instead of the bundled one |
+| `UNRAVEL_RIZIN` | Rizin to use |
+| `UNRAVEL_JADX` | jadx to use for Android apps |
+| `UNRAVEL_APKTOOL` | apktool to use for smali |
+| `UNRAVEL_LLDB_DAP` | `lldb-dap` for the debugger |
+| `UNRAVEL_SUPPORT` | Where Unravel keeps projects and settings |
+| `UNRAVEL_CACHE` | Where Unravel caches decompiled code |
+| `UNRAVEL_PROJECTS_DIR` | Where the save dialog starts (default `~/Documents/Unravel`) |
+| `UNRAVEL_EXPORT_DIR` | Where exports and patched copies go (default `~/Downloads/Unravel`) |
+| `UNRAVEL_SIGN_IDENTITY` | Code-signing identity for `./script/package` |
 
 ## Documentation
 

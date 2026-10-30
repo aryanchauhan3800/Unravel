@@ -54,7 +54,7 @@ export type Opened = { readonly path: string; readonly sha256: string; readonly 
 
 /** How to start REA: the bundled Node when Eleven ships one, otherwise the user's. */
 export function reaLaunch(): { readonly command: string; readonly args: readonly string[] } {
-  const rea = pathSetting("reaPath", "ELEVEN_REA") ?? "rea";
+  const rea = pathSetting("reaPath", "UNRAVEL_REA") ?? pathSetting("reaPath", "ELEVEN_REA") ?? "rea";
   return /\.m?js$/.test(rea) ? { command: nodeCommand(), args: [rea, "mcp"] } : { command: rea, args: ["mcp"] };
 }
 

@@ -157,7 +157,7 @@ export async function checkAppUpdate(): Promise<AppUpdate> {
 }
 
 async function gather(): Promise<Info> {
-  const rizinProgram = existing(currentSettings().rizinPath) ?? existing(process.env.ELEVEN_RIZIN ?? "") ?? findOnPath("rizin");
+  const rizinProgram = existing(currentSettings().rizinPath) ?? existing(process.env.UNRAVEL_RIZIN ?? process.env.ELEVEN_RIZIN ?? "") ?? findOnPath("rizin");
   const ghidraDir = existing(process.env.GHIDRA_INSTALL_DIR ?? "");
   const javaHome = existing(process.env.JAVA_HOME ?? "");
   const rea = reaProgram();

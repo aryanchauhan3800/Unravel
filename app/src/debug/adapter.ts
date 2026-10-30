@@ -8,9 +8,9 @@ import { runSync } from "../lib/process";
 /** Ubuntu and Debian name it after the LLVM version, like lldb-dap-18. */
 const LLDB_VERSIONS = [22, 21, 20, 19, 18] as const;
 
-/** Where lldb-dap lives: the lldb-dap chosen in Settings (or ELEVEN_LLDB_DAP), Xcode's copy via xcrun, or one on PATH. Null when none is installed. */
+/** Where lldb-dap lives: the lldb-dap chosen in Settings (or UNRAVEL_LLDB_DAP), Xcode's copy via xcrun, or one on PATH. Null when none is installed. */
 export function findLldbDap(): string | null {
-  const override = pathSetting("lldbDap", "ELEVEN_LLDB_DAP");
+  const override = pathSetting("lldbDap", "UNRAVEL_LLDB_DAP") ?? pathSetting("lldbDap", "ELEVEN_LLDB_DAP");
   if (override) return existsSync(override) ? override : null;
   if (OS === "mac") try {
     const viaXcrun = runSync("xcrun", ["-f", "lldb-dap"]).trim();

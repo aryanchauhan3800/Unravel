@@ -11,7 +11,7 @@ import { openExternal, reveal } from "../lib/platform";
 export type ObjcEntry = { readonly address: string; readonly name: string };
 
 function exportDir(): string {
-  return pathSetting("exportDir", "ELEVEN_EXPORT_DIR") ?? join(homedir(), "Downloads", "Eleven");
+  return pathSetting("exportDir", "UNRAVEL_EXPORT_DIR") ?? pathSetting("exportDir", "ELEVEN_EXPORT_DIR") ?? join(homedir(), "Downloads", "Unravel");
 }
 
 /** Opens this program's exports folder in the file manager, making it first if nothing was exported yet. */
@@ -30,7 +30,7 @@ async function write(program: Program, file: string, body: string): Promise<stri
   await mkdir(dir, { recursive: true });
   const path = join(dir, file);
   await writeFile(path, body);
-  if (currentSettings().revealExports && !pathSetting("exportDir", "ELEVEN_EXPORT_DIR")) reveal(path);
+  if (currentSettings().revealExports && !pathSetting("exportDir", "UNRAVEL_EXPORT_DIR") && !pathSetting("exportDir", "ELEVEN_EXPORT_DIR")) reveal(path);
   return path;
 }
 

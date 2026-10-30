@@ -7,7 +7,7 @@ import type { CodeType } from "./codeTypes";
 import { start, stop } from "../lib/process";
 
 export function rizinProgram(): string {
-  return pathSetting("rizinPath", "ELEVEN_RIZIN") ?? "rizin";
+  return pathSetting("rizinPath", "UNRAVEL_RIZIN") ?? pathSetting("rizinPath", "ELEVEN_RIZIN") ?? "rizin";
 }
 
 /**

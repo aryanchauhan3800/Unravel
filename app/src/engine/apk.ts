@@ -124,9 +124,9 @@ export async function readResourceStrings(jadxDir: string): Promise<readonly Tab
 
 const APKTOOL = OS === "windows" ? "apktool.bat" : "apktool";
 
-/** apktool from ELEVEN_APKTOOL or the PATH, for smali. */
+/** apktool from UNRAVEL_APKTOOL or the PATH, for smali. */
 export function apktoolCommand(): string | null {
-  const chosen = process.env.ELEVEN_APKTOOL;
+  const chosen = process.env.UNRAVEL_APKTOOL ?? process.env.ELEVEN_APKTOOL;
   if (chosen && existsSync(chosen)) return chosen;
   const dirs = (process.env.PATH ?? "").split(delimiter).concat("/opt/homebrew/bin", "/usr/local/bin", "/opt/zerobrew/prefix/bin");
   return dirs.filter(Boolean).map((dir) => join(dir, APKTOOL)).find((bin) => existsSync(bin)) ?? null;

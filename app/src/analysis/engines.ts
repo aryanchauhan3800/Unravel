@@ -35,7 +35,7 @@ function hopperInstalled(): boolean {
 }
 
 export function rizinInstalled(): boolean {
-  const chosen = currentSettings().rizinPath || process.env.ELEVEN_RIZIN;
+  const chosen = currentSettings().rizinPath || process.env.UNRAVEL_RIZIN || process.env.ELEVEN_RIZIN;
   return chosen ? existsSync(chosen) : onPath("rizin");
 }
 

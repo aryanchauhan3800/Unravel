@@ -175,7 +175,7 @@ function skippedAnalyzers(settings: Settings): string | null {
   return DEFAULT_SKIPPED.filter((_name, ix) => !wanted[ix]).join(",");
 }
 
-/** Fills in GHIDRA_INSTALL_DIR, JAVA_HOME and ELEVEN_REA from the usual spots, so a Finder launch can still reach Ghidra. */
+/** Fills in GHIDRA_INSTALL_DIR, JAVA_HOME and UNRAVEL_REA from the usual spots, so a Finder launch can still reach Ghidra. */
 export function adoptToolchain(): void {
   const settings = currentSettings();
   const ghidra = settings.ghidraDir || INHERITED.GHIDRA_INSTALL_DIR || findGhidra();
@@ -194,10 +194,18 @@ export function adoptToolchain(): void {
   if (skipped !== null) process.env.REA_GHIDRA_DISABLED_ANALYZERS = skipped;
   else if (process.env.REA_GHIDRA_DISABLED_ANALYZERS === undefined) process.env.REA_GHIDRA_DISABLED_ANALYZERS = DEFAULT_SKIPPED.join(",");
   setEnv("REA_ANALYSIS_PROVIDER", activeProvider() ?? INHERITED.REA_ANALYSIS_PROVIDER ?? "ghidra");
-  setEnv("ELEVEN_REA", settings.reaPath || INHERITED.ELEVEN_REA || findRea());
-  setEnv("ELEVEN_RIZIN", settings.rizinPath || INHERITED.ELEVEN_RIZIN || findRizin());
-  setEnv("ELEVEN_LLDB_DAP", settings.lldbDap || INHERITED.ELEVEN_LLDB_DAP);
-  setEnv("ELEVEN_EXPORT_DIR", settings.exportDir || INHERITED.ELEVEN_EXPORT_DIR);
+  const rea = settings.reaPath || INHERITED.UNRAVEL_REA || INHERITED.ELEVEN_REA || findRea();
+  const rizin = settings.rizinPath || INHERITED.UNRAVEL_RIZIN || INHERITED.ELEVEN_RIZIN || findRizin();
+  const lldbDap = settings.lldbDap || INHERITED.UNRAVEL_LLDB_DAP || INHERITED.ELEVEN_LLDB_DAP;
+  const exportDir = settings.exportDir || INHERITED.UNRAVEL_EXPORT_DIR || INHERITED.ELEVEN_EXPORT_DIR;
+  setEnv("UNRAVEL_REA", rea);
+  setEnv("ELEVEN_REA", rea);
+  setEnv("UNRAVEL_RIZIN", rizin);
+  setEnv("ELEVEN_RIZIN", rizin);
+  setEnv("UNRAVEL_LLDB_DAP", lldbDap);
+  setEnv("ELEVEN_LLDB_DAP", lldbDap);
+  setEnv("UNRAVEL_EXPORT_DIR", exportDir);
+  setEnv("ELEVEN_EXPORT_DIR", exportDir);
   if (BUNDLED_NODE && !(process.env.PATH ?? "").includes(dirname(BUNDLED_NODE))) process.env.PATH = [process.env.PATH, dirname(BUNDLED_NODE)].filter(Boolean).join(delimiter);
 }
 

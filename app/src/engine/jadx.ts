@@ -63,9 +63,9 @@ const JADX = OS === "windows" ? "jadx.bat" : "jadx";
 /** The arch an opened Android app gets, which routes it to jadx instead of Ghidra. */
 export const DALVIK = "dalvik";
 
-/** jadx from ELEVEN_JADX, the PATH, or the newest copy unpacked in ~/.local/share. */
+/** jadx from UNRAVEL_JADX, the PATH, or the newest copy unpacked in ~/.local/share. */
 export function jadxCommand(): string | null {
-  const chosen = process.env.ELEVEN_JADX;
+  const chosen = process.env.UNRAVEL_JADX ?? process.env.ELEVEN_JADX;
   if (chosen && existsSync(chosen)) return chosen;
   const dirs = (process.env.PATH ?? "").split(delimiter).concat("/opt/homebrew/bin", "/usr/local/bin");
   const onPath = dirs.filter(Boolean).map((dir) => join(dir, JADX)).find((bin) => existsSync(bin));

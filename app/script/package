@@ -66,5 +66,5 @@ if [ "$identity" != "-" ] && [ "$profile" != "skip" ]; then
 fi
 
 echo "packaged $zip ($(du -h "$zip" | cut -f1))"
-[ "$identity" = "-" ] && echo "NOTE: ad-hoc signed, for this Mac only. Set ELEVEN_SIGN_IDENTITY to release."
+[ "$identity" = "-" ] && echo "NOTE: ad-hoc signed, for this Mac only. Set UNRAVEL_SIGN_IDENTITY to release."
 exit 0

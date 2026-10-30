@@ -49,7 +49,7 @@ function reaProgram(): string {
 
 export function findRea(): Found {
   const program = reaProgram();
-  const source = currentSettings().reaPath ? "Chosen in Settings" : process.env.ELEVEN_REA ? "Set by ELEVEN_REA" : "Found on your PATH";
+  const source = currentSettings().reaPath ? "Chosen in Settings" : (process.env.UNRAVEL_REA || process.env.ELEVEN_REA) ? "Set by UNRAVEL_REA" : "Found on your PATH";
   const path = isAbsolute(program) ? (existsSync(program) ? program : null) : findOnPath(program);
   if (path) return { kind: "found", path, source };
   return { kind: "missing", fix: "Install REA so the rea command works in Terminal, or choose it here." };

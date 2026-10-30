@@ -75,7 +75,7 @@ function brewPath(): string | null {
 }
 
 function rizinPath(): string | null {
-  return pathSetting("rizinPath", "ELEVEN_RIZIN") ?? findOnPath("rizin") ?? RIZIN_PATHS.find(existsSync) ?? null;
+  return pathSetting("rizinPath", "UNRAVEL_RIZIN") ?? pathSetting("rizinPath", "ELEVEN_RIZIN") ?? findOnPath("rizin") ?? RIZIN_PATHS.find(existsSync) ?? null;
 }
 
 function tilde(path: string): string {

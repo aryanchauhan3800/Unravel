@@ -27,12 +27,12 @@ Any ACP agent works through REA (Ghidra headless) and Unravel's own tools.
 - `./script/test`: runs the deterministic test files one at a time (parallel Ghidra JVMs thrash the machine). `bun test <file>` for one file while iterating. `*.live.test.tsx` call a real agent and are excluded.
 - `bun scripts/gate-m1.ts <file...>`: engine-level open and read timing.
 - `./script/bundle-macos`: builds `build/Unravel.app` (bundle id app.chizi.eleven).
-- `./script/package`: builds, ad-hoc signs (or ELEVEN_SIGN_IDENTITY) and zips the app to build/Unravel-<version>-<arch>.zip.
+- `./script/package`: builds, ad-hoc signs (or UNRAVEL_SIGN_IDENTITY) and zips the app to build/Unravel-<version>-<arch>.zip.
 - `install.sh` (repo root): curl installer; downloads the release zip for the arch and installs to /Applications.
 
 ## Environment
 
-- REA must be 6.x. Unravel finds a checkout next to this repo (`../rea`), the copy bundled in Unravel.app, or `ELEVEN_REA`. Older `rea` builds on PATH refuse Ghidra on Apple Silicon.
+- REA must be 6.x. Unravel finds a checkout next to this repo (`../rea`), the copy bundled in Unravel.app, or `UNRAVEL_REA`. Older `rea` builds on PATH refuse Ghidra on Apple Silicon.
 - Ghidra 12.x, found in `~/.local/share`, `~/Applications` or `GHIDRA_INSTALL_DIR`. The JDK is found automatically.
 - Android apps read through jadx (never Ghidra); apktool, when installed, gives smali. `.xapk`/`.apks`/`.zip` split bundles open their base APK with the splits beside it.
 - Pinned npx agent versions can fail behind an npm `before` quarantine, so Unravel unpins them.

@@ -11,7 +11,7 @@ import { run } from "../lib/process";
 
 export type NativeCommand = { readonly path: string; readonly args: readonly string[] };
 
-const SHELL_VARS = ["PATH", "GHIDRA_INSTALL_DIR", "JAVA_HOME", "ELEVEN_REA"] as const;
+const SHELL_VARS = ["PATH", "GHIDRA_INSTALL_DIR", "JAVA_HOME", "UNRAVEL_REA"] as const;
 const GENERIC_WORDS = new Set(["cli", "code", "agent", "acp", "build"]);
 
 function parseShellVars(output: string): ReadonlyMap<string, string> {
