@@ -43,6 +43,27 @@ Native code is read by [Ghidra](https://ghidra-sre.org) through [REA](https://gi
 - **Playbooks.** Built-in skills such as first look, name functions, trace a feature and network map work with any agent.
 - **Export.** Pseudocode, assembly, control-flow graphs as PDF and Objective-C class inventories.
 
+## Working with Code IDEs & Agents
+
+Unravel pairs directly with AI coding assistants and agentic IDEs such as Antigravity, Cursor, Codex, and Claude Code.
+
+When you use Unravel to reverse-engineer an application, your IDE writes the clean-room reimplementation in a dedicated project directory, keeping Unravel's own repository completely untouched.
+
+### Communication Bridges
+
+- **Unravel MCP Server (`eleven`)**: Unravel runs an internal Model Context Protocol server over a local socket. Your IDE connects directly to query `current_view` (active binary, function, and address), navigate with `open_function`, and synchronize renames or notes.
+- **Shared REA Toolchain**: Both Unravel and your IDE tap into the same REA 6.x engine (headless Ghidra and Rizin) to inspect decompiled pseudocode, assembly instructions, and cross-references.
+- **Slices Cache**: Unravel unpacks thin Mach-O slices, decompiled Objective-C interfaces, and Swift symbol maps into `~/Library/Caches/unravel/slices/<sha256>/`. Your IDE reads these cached files instantly with zero latency.
+
+### Clean-Room Workflow
+
+```
+1. Open Target in Unravel        -> Drop binary into /Applications/Unravel.app
+2. IDE Connects via MCP/Cache   -> Agent inspects active view, symbols, and geometry
+3. Clean Project Generated      -> Source code written in ~/Developer/<TargetApp>/
+4. Native Build & Installation  -> Compiled and signed to /Applications/<TargetApp>.app
+```
+
 ## Support Unravel
 
 Unravel is free and open source. If it saves you time, starring the repository or [sponsoring on GitHub](https://github.com/sponsors/aryanchauhan3800) helps support ongoing development.
