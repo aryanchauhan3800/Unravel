@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/images/workbench.png" width="880" alt="Unravel workbench in action with AI agent">
+  <img src="docs/images/home.png" width="880" alt="Unravel home screen">
 </p>
 
 Unravel is a reverse-engineering app built around agents. Drop in an app, a binary, an Android APK, a GPU kernel, a shader or a model and ask what it does. Any agent that speaks the [Agent Client Protocol](https://agentclientprotocol.com) can read the code, follow references, rename functions, leave notes and suggest patches, while you watch and approve in the same window.
@@ -46,6 +46,10 @@ Native code is read by [Ghidra](https://ghidra-sre.org) through [REA](https://gi
 ## Working with Code IDEs & Agents
 
 Unravel pairs directly with AI coding assistants and agentic IDEs such as Antigravity, Cursor, Codex, and Claude Code.
+
+<p align="center">
+  <img src="docs/images/workbench.png" width="880" alt="Unravel workbench in action with AI agent">
+</p>
 
 When you use Unravel to reverse-engineer an application, your IDE writes the clean-room reimplementation in a dedicated project directory, keeping Unravel's own repository completely untouched.
 
