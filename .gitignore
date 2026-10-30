@@ -17,6 +17,8 @@ launch/
 .env.*
 *.log
 *.trace
+site/*.zip
+*.zip
 
 # Editor and OS
 .DS_Store

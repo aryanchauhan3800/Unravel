@@ -1,6 +1,6 @@
 # Installs Unravel for the current Windows user.
 #
-#   irm https://unravel.chizi.app/install.ps1 | iex
+#   irm https://raw.githubusercontent.com/aryanchauhan3800/Unravel/main/install.ps1 | iex
 #
 # Set UNRAVEL_RELEASE_URL to install a specific zip (local path or URL) instead.
 $ErrorActionPreference = "Stop"

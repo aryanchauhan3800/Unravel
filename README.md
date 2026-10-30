@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/images/home.png" width="820" alt="Unravel home screen">
+  <img src="docs/images/workbench.png" width="880" alt="Unravel workbench in action with AI agent">
 </p>
 
 Unravel is a reverse-engineering app built around agents. Drop in an app, a binary, an Android APK, a GPU kernel, a shader or a model and ask what it does. Any agent that speaks the [Agent Client Protocol](https://agentclientprotocol.com) can read the code, follow references, rename functions, leave notes and suggest patches, while you watch and approve in the same window.

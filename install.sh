@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Installs Unravel into /Applications.
 #
-#   curl -fsSL https://unravel.chizi.app/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/aryanchauhan3800/Unravel/main/install.sh | bash
 #
 # It downloads the latest release zip for this Mac's architecture, unzips it,
 # and opens it. The app is signed and notarized; Java and Ghidra download on first launch. Set
