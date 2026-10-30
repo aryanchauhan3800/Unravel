@@ -20,6 +20,12 @@ const LABELS: Readonly<Record<string, readonly [label: PlainId, doing: PlainId, 
   find_code_for_string: ["tool.codeForString", "tool.doing.codeForString", "string"],
   xrefs: ["tool.xrefs", "tool.doing.xrefs", "address"],
   ToolSearch: ["tool.toolSearch", "tool.doing.toolSearch"],
+  open_function: ["tool.openFunction", "tool.doing.openFunction", "function"],
+  set_view: ["tool.setView", "tool.doing.setView", "view"],
+  rename_function: ["tool.renameFunction", "tool.doing.renameFunction", "new_name"],
+  add_note: ["tool.addNote", "tool.doing.addNote", "note"],
+  add_comment: ["tool.addComment", "tool.doing.addComment", "comment"],
+  bookmark: ["tool.bookmark", "tool.doing.bookmark", "address"],
 };
 
 /** `command` is the shell line a call ran, kept apart from `detail` so it can be drawn in the code font. */
@@ -50,6 +56,12 @@ function shellCall(tool: string, input: unknown, summary: string | null): { read
   return { command: firstLine(command), said: stringField(input, "description")?.trim() || summary || null };
 }
 
+function cleanToolName(tool: string): string {
+  const rea = reaToolName(tool);
+  if (rea) return rea;
+  return tool.replace(/^mcp__(eleven|unravel)__/, "").replace(/^(eleven|unravel)[_:.]+/, "");
+}
+
 /**
  * Splits a raw tool call into the bold label and the grey detail people read.
  * Some agents send a shell command as the title with an empty input, so the title counts as the command too.
@@ -57,7 +69,7 @@ function shellCall(tool: string, input: unknown, summary: string | null): { read
 export function toolLabel(tool: string, input: unknown, summary: string | null = null): ToolLabel {
   const shell = shellCall(tool, input, summary);
   if (shell) return { label: shell.said ?? t("tool.runCommand"), detail: null, command: shell.command };
-  const name = reaToolName(tool) ?? tool;
+  const name = cleanToolName(tool);
   const known = LABELS[name];
   if (!known) return { label: humanize(name), detail: null, command: null };
   const [label, , key] = known;
@@ -81,7 +93,7 @@ export function describe(tool: string, input: unknown): string {
 export function doing(tool: string, input: unknown): string {
   const { label, detail } = toolLabel(tool, input);
   const bare = unnamedCommand(tool, input);
-  const known = LABELS[reaToolName(tool) ?? tool];
+  const known = LABELS[cleanToolName(tool)];
   const now = known ? t(known[1]) : bare !== null ? t("tool.runningCommand") : label;
   const rest = detail ?? bare;
   return rest ? `${now} · ${rest}` : now;

@@ -6,21 +6,25 @@ import { Icon } from "../components/ui";
 export type StepStatus = "complete" | "active" | "pending";
 
 /** The steps an agent took, folded under one line: its icon, what it's doing, and a chevron to open or close them. */
-export function ChainOfThought({ label, open, onToggle, children }: {
+export function ChainOfThought({ label, open, onToggle, running = false, children }: {
   readonly label: string;
   readonly open: boolean;
   readonly onToggle: () => void;
+  readonly running?: boolean;
   readonly children: ReactNode;
 }): ReactElement {
   const { p } = useTheme();
   return (
-    <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
-      <div onClick={onToggle} role="button" aria-expanded={open} aria-label={label} style={{ display: "flex", alignItems: "center", gap: 8, width: "100%", fontSize: 14, color: p.muted, cursor: "pointer", hover: { opacity: 0.72 } }}>
-        <Icon name="brain" size={16} color={p.muted} />
-        <div style={{ flexGrow: 1, minWidth: 0 }}>{label}</div>
-        <Icon name={open ? "collapse" : "disclosure"} size={16} color={p.muted} />
+    <div style={{ display: "flex", flexDirection: "column", width: "100%", borderWidth: 1, borderColor: running ? p.line2 : p.line3, borderRadius: 10, padding: 10, backgroundColor: running ? p.raised : p.fill }}>
+      <div onClick={onToggle} role="button" aria-expanded={open} aria-label={label} style={{ display: "flex", alignItems: "center", gap: 8, width: "100%", fontSize: 13, color: running ? p.text : p.muted, cursor: "pointer", hover: { opacity: 0.72 } }}>
+        <Icon name={running ? "working" : "check"} size={15} color={running ? p.primary : p.string || p.muted} />
+        <div style={{ fontWeight: 700, fontSize: 11, color: running ? p.primary : p.text3 }}>
+          {running ? "INVESTIGATING" : "ANALYSIS COMPLETE"}
+        </div>
+        <div style={{ flexGrow: 1, minWidth: 0, fontSize: 12, color: p.faint, marginLeft: 2 }}>{label}</div>
+        <Icon name={open ? "collapse" : "disclosure"} size={15} color={p.muted} />
       </div>
-      {open && <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 24 }}>{children}</div>}
+      {open && <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 16 }}>{children}</div>}
     </div>
   );
 }
@@ -36,13 +40,20 @@ export function ChainOfThoughtStep({ icon, label, description, status, tone = nu
 }): ReactElement {
   const { p } = useTheme();
   const color = tone ?? (status === "active" ? p.text : p.muted);
+  const stepIcon = status === "complete" ? "check" : icon;
   return (
-    <div style={{ display: "flex", gap: 8, fontSize: 14, color, ...(status === "pending" ? { opacity: 0.5 } : {}) }}>
+    <div style={{ display: "flex", gap: 8, fontSize: 13.5, color, ...(status === "pending" ? { opacity: 0.5 } : {}) }}>
       <div style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "center", width: 16, flexShrink: 0, marginTop: 2 }}>
-        {icon ? <Icon name={icon} size={16} color={color} /> : <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 16, height: 16 }}><div style={{ width: 3, height: 3, borderRadius: 1.5, backgroundColor: color }} /></div>}
-        <div style={{ position: "absolute", top: 28, bottom: 0, left: 7.5, width: 1, backgroundColor: p.line2 }} />
+        {stepIcon ? (
+          <Icon name={stepIcon} size={15} color={status === "complete" ? (p.string || p.muted) : color} />
+        ) : (
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 16, height: 16 }}>
+            <div style={{ width: 4, height: 4, borderRadius: 2, backgroundColor: color }} />
+          </div>
+        )}
+        <div style={{ position: "absolute", top: 26, bottom: 0, left: 7.5, width: 1, backgroundColor: p.line2 }} />
       </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 8, flexGrow: 1, minWidth: 0, overflow: "hidden" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 6, flexGrow: 1, minWidth: 0, overflow: "hidden" }}>
         <div>{label}</div>
         {description && <div style={{ fontSize: 12, color: p.muted }}>{description}</div>}
         {children}

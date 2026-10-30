@@ -52,15 +52,29 @@ export function FencedCode({ fence, lines, language = "" }: { readonly fence: st
   );
 }
 
-/** Markdown with the fenced blocks drawn by Eleven, so each one can be copied on its own. */
-export function Markdown({ source, color }: { readonly source: string; readonly color: string }): ReactElement {
+/** Markdown with the fenced blocks drawn by Unravel, so each one can be copied on its own. */
+export function Markdown({ source, color, onLink = null }: {
+  readonly source: string;
+  readonly color: string;
+  readonly onLink?: ((url: string) => void) | null;
+}): ReactElement {
   const { p } = useTheme();
   const look = useCodeLook();
   const { colorScheme } = useSettings().settings;
   const theme = useMemo(() => nativeTheme(p, look, syntaxFor(colorScheme, p)), [p, look, colorScheme]);
   const parts = useMemo(() => pieces(source), [source]);
   const prose = (text: string, key: string): ReactElement => (
-    <markdown key={key} source={text} theme={theme} onLinkClick={(event) => event.value && openLink(event.value)} style={{ color }} />
+    <markdown
+      key={key}
+      source={text}
+      theme={theme}
+      onLinkClick={(event) => {
+        if (!event.value) return;
+        if (onLink) onLink(event.value);
+        else openLink(event.value);
+      }}
+      style={{ color }}
+    />
   );
   if (!parts.some((piece) => piece.kind === "code")) return prose(source, "all");
   return (

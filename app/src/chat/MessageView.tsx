@@ -18,6 +18,8 @@ import { ChainOfThought, ChainOfThoughtResults, ChainOfThoughtStep } from "./Cha
 import { Sources, sourcesOf } from "./Sources";
 import { copyText } from "./useThread";
 import { shownText } from "../skills/load";
+import { openLink } from "../settings/system";
+import { extractUnravelTargets, handleUnravelUri } from "./unravelUri";
 
 const PREVIEW_CHARS = 1200;
 
@@ -250,11 +252,13 @@ function chainLabel(turn: AgentTurn, steps: number, now: number): string {
 
 const MAX_JUMPS = 3;
 
-/** The functions a finished reply points at: Ghidra names in its text, then the ones its tools read. */
+/** The functions a finished reply points at: Ghidra names, unravel:// links, then the ones its tools read. */
 function mentionedFunctions(turn: AgentTurn): readonly string[] {
-  const named = replyText(turn).match(/\b(?:FUN|thunk_FUN)_[0-9a-f]+\b/g) ?? [];
+  const text = replyText(turn);
+  const named = text.match(/\b(?:FUN|thunk_FUN)_[0-9a-f]+\b/g) ?? [];
+  const linked = extractUnravelTargets(text);
   const read = turn.blocks.flatMap((block) => (block.kind === "tool" ? [stringField(block.step.input, "procedure")] : [])).filter((name): name is string => typeof name === "string");
-  return [...new Set([...named, ...read])].slice(0, MAX_JUMPS);
+  return [...new Set([...linked, ...named, ...read])].slice(0, MAX_JUMPS);
 }
 
 function replyText(turn: AgentTurn): string {
@@ -302,10 +306,13 @@ function AgentReply({ turn, last, onRetry, onOpen, onOpenText }: {
       ...(last && !running ? [{ kind: "separator" } as const, { kind: "action", label: t("chat.tryAgain"), icon: "retry", run: onRetry } as const] : []),
     ];
   };
+  const onLink = (url: string): void => {
+    if (!handleUnravelUri(url, onOpen)) openLink(url);
+  };
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
       {steps.length > 0 && (
-        <ChainOfThought label={chainLabel(turn, steps.length, now)} open={open} onToggle={() => setOpened(!open)}>
+        <ChainOfThought label={chainLabel(turn, steps.length, now)} open={open} onToggle={() => setOpened(!open)} running={running}>
           {steps.map((block, ix) => (
             <div key={block.kind === "tool" ? block.step.id : `${block.kind}-${ix}`} {...menuOn(() => menuFor(block))} style={{ display: "flex", flexDirection: "column" }}>
               <StepView block={block} onOpen={onOpen} onOpenText={onOpenText} />
@@ -315,7 +322,7 @@ function AgentReply({ turn, last, onRetry, onOpen, onOpenText }: {
       )}
       {answer.map((block, ix) => block.kind === "text" && (
         <div key={`answer-${ix}`} {...menuOn(() => menuFor(block))} style={{ display: "flex", flexDirection: "column", userSelect: "text" }}>
-          <Markdown source={block.text.trim()} color={p.text2} />
+          <Markdown source={block.text.trim()} color={p.text2} onLink={onLink} />
         </div>
       ))}
       <Sources sources={sourcesOf(blocks)} />

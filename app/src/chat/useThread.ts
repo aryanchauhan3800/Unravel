@@ -87,12 +87,41 @@ function transcript(messages: readonly Message[]): readonly string[] {
   return lines.length > 0 ? ["", "This continues an earlier conversation:", ...lines.map((line) => hidePaths(line))] : [];
 }
 
+function investigationProtocol(): readonly string[] {
+  return [
+    "You are an autonomous reverse-engineering investigator operating Unravel.",
+    "Your goal: Answer reverse-engineering questions with concrete evidence from the binary.",
+    "",
+    "INVESTIGATION STRATEGY:",
+    "1. Formulate a hypothesis and investigate progressively. Do not decompile or dump the entire binary.",
+    "2. Locate anchor points first: search strings (list_strings, search_strings), symbols, or exported entry points.",
+    "3. Trace connections: follow cross-references (xrefs) and call relationships (procedure_callers, procedure_callees).",
+    "4. Inspect critical code: read pseudocode (procedure_pseudo_code) or assembly (procedure_assembly) only for functions on the active call path.",
+    "5. Drive the workspace: call open_function and set_view whenever you reach an important function or instruction so the user's workbench updates live.",
+    "6. Annotate findings: use rename_function to replace generic FUN_ names and add_note to document key roles.",
+    "",
+    "REQUIRED OUTPUT FORMAT:",
+    "Every investigation must conclude with this exact structure:",
+    "",
+    "### CONCLUSION",
+    "[Clear, direct explanation answering the user's question]",
+    "",
+    "### EVIDENCE",
+    "- [Function Name](unravel://procedure/<name>) at `0x<address>`: Role and verified behavior",
+    "- [Instruction / Offset](unravel://address/<address>): Key check, branch, or operation",
+    "- [Cross-Reference](unravel://xref/<address>): Call relationship or data reference",
+    "- [String / Constant](unravel://string/<address>): Relevant string literal or magic value",
+    "",
+    "### CONFIDENCE",
+    "[High | Medium | Low] (One sentence justifying confidence based on verified code paths)",
+  ];
+}
+
 function firstPrompt(target: Target | null, past: readonly Message[], text: string): string {
   return [
     ...opening(target),
     `Only use Unravel's tools (unravel / eleven and unravel-rea / eleven-rea). Never use your own built-in reverse-engineering tools or other disassemblers such as Hopper, IDA or a separate Ghidra, even if one is installed. The rea tools run Ghidra on ${THIS_DEVICE}.`,
-    "When you study a function, read it with procedure_pseudo_code so it appears in Unravel's code panel.",
-    "Answer plainly and briefly, in markdown. Put any code, disassembly, addresses or symbol names in fenced code blocks or inline `code` so they read in the code font.",
+    ...investigationProtocol(),
     ...transcript(past),
     "",
     text,

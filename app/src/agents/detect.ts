@@ -47,7 +47,7 @@ function isExecutable(path: string): boolean {
 }
 
 /** Where agent installers put their tools, for when Eleven starts without the login shell's PATH. */
-const AGENT_BIN_DIRS = OS === "windows" ? [] : [join(homedir(), ".grok", "bin"), join(homedir(), ".local", "bin"), join(homedir(), ".bun", "bin"), join(homedir(), ".cargo", "bin"), "/opt/homebrew/bin", "/usr/local/bin"];
+const AGENT_BIN_DIRS = OS === "windows" ? [] : [join(homedir(), ".gemini", "bin"), join(homedir(), ".grok", "bin"), join(homedir(), ".local", "bin"), join(homedir(), ".bun", "bin"), join(homedir(), ".cargo", "bin"), "/opt/homebrew/bin", "/usr/local/bin"];
 
 /** Looks a command up on PATH directly, so shell functions and aliases never match. */
 export function findOnPath(name: string, extra: readonly string[] = []): string | null {
