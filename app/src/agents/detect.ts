@@ -11,7 +11,7 @@ import { run } from "../lib/process";
 
 export type NativeCommand = { readonly path: string; readonly args: readonly string[] };
 
-const SHELL_VARS = ["PATH", "GHIDRA_INSTALL_DIR", "JAVA_HOME", "UNRAVEL_REA"] as const;
+const SHELL_VARS = ["PATH", "GHIDRA_INSTALL_DIR", "JAVA_HOME", "UNRAVEL_REA", "ELEVEN_REA"] as const;
 const GENERIC_WORDS = new Set(["cli", "code", "agent", "acp", "build"]);
 
 function parseShellVars(output: string): ReadonlyMap<string, string> {
@@ -30,6 +30,7 @@ export async function adoptLoginShell(): Promise<void> {
     const { stdout } = await run(process.env.SHELL ?? "/bin/zsh", ["-ilc", script], { timeout: 5000 });
     const vars = parseShellVars(stdout);
     for (const [name, value] of vars) process.env[name] ??= value;
+    if (!process.env.UNRAVEL_REA && process.env.ELEVEN_REA) process.env.UNRAVEL_REA = process.env.ELEVEN_REA;
     const shellPath = vars.get("PATH");
     if (shellPath) process.env.PATH = shellPath;
   } catch {
