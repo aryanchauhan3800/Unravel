@@ -10,7 +10,7 @@ The user wants to rebuild or clone a component, feature, or complete application
 ## Core Rules for Reconstructions
 
 1. **Separate Project Directory (Never inside Unravel)**:
-   - Never write reconstructed source files inside the Unravel repository (`eleven-main`).
+   - Never write reconstructed source files inside the Unravel repository.
    - Always create a dedicated project directory outside Unravel, defaulting to `~/Developer/<TargetName>` (or a path explicitly requested by the user).
    
 2. **Launchable App Delivery (Not just raw code)**:
